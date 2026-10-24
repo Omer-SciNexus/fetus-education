@@ -1,0 +1,15 @@
+node_modules/
+dist/
+.env
+.env.local
+.env.*.local
+*.log
+coverage/
+playwright-report/
+test-results/
+supabase/.branches/
+supabase/.temp/
+supabase/functions/.env
+# Operator backups must never be committed (section 17).
+backups/
+*.lbbackup

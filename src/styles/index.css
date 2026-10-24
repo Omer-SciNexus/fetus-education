@@ -1,0 +1,61 @@
+@import 'tailwindcss';
+
+/* Design tokens (section 6.1): warm ivory, restrained peach and sage, readable dark text. */
+@theme {
+  --font-sans: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --color-ivory: #fbf7f0;
+  --color-paper: #ffffff;
+  --color-ink: #2b2620;
+  --color-ink-soft: #5c544a;
+  --color-line: #e7dfd3;
+  --color-peach-50: #fdf1ea;
+  --color-peach-100: #fbe2d4;
+  --color-peach-500: #d9825b;
+  --color-peach-700: #a4532f;
+  --color-sage-50: #eef3ec;
+  --color-sage-100: #dbe6d6;
+  --color-sage-500: #6f8f68;
+  --color-sage-700: #46623f;
+  --color-danger: #a33a2c;
+  --color-danger-50: #fbecea;
+  --color-warn-50: #fdf5df;
+  --color-warn-700: #7a5a10;
+}
+
+@layer base {
+  html {
+    background: var(--color-ivory);
+    color: var(--color-ink);
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    margin: 0;
+    min-height: 100dvh;
+    background: var(--color-ivory);
+    font-family: var(--font-sans);
+    line-height: 1.55;
+  }
+  h1, h2, h3 {
+    line-height: 1.25;
+    text-wrap: balance;
+  }
+  :focus-visible {
+    outline: 3px solid var(--color-peach-700);
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+.prose-lb p + p {
+  margin-top: 0.85rem;
+}
+.prose-lb {
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+}
