@@ -1,0 +1,10 @@
+{
+  "name": "Little Bloom",
+  "short_name": "Little Bloom",
+  "description": "Short prenatal bonding activities, stories and private family memories.",
+  "start_url": "/today",
+  "display": "standalone",
+  "background_color": "#fbf7f0",
+  "theme_color": "#fbf7f0",
+  "icons": [{ "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" }]
+}
