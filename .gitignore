@@ -13,3 +13,7 @@ supabase/functions/.env
 # Operator backups must never be committed (section 17).
 backups/
 *.lbbackup
+.video-tools/
+.video-render/
+# Duplicate of visual-pack/ (extracted copy is committed).
+LITTLE_BLOOM_VISUAL_PACK_24_IMAGES.zip

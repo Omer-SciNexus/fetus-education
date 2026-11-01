@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Little Bloom · Visual Collection</title>
+<style>
+:root{color-scheme:light;--paper:#fff9f3;--ink:#203b35;--muted:#596c62;--sage:#789487;--peach:#d97868;--line:#e7ded4}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 system-ui,-apple-system,Segoe UI,sans-serif}
+a{color:inherit;text-underline-offset:4px}button,input{font:inherit}button,a,input{touch-action:manipulation}button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #98503f;outline-offset:4px}
+header{max-width:1440px;margin:auto;padding:64px 32px 32px}.eyebrow{font-size:12px;font-weight:700;letter-spacing:.17em;color:var(--muted);text-transform:uppercase}
+h1{font-size:clamp(36px,5vw,68px);line-height:1.08;font-weight:600;letter-spacing:-.045em;margin:16px 0}header p{max-width:760px;color:var(--muted);margin:12px 0}
+.meta{display:flex;flex-wrap:wrap;gap:12px;margin:24px 0}.meta span{border:1px solid var(--line);border-radius:30px;padding:6px 16px;font-size:14px}
+.toolbar{position:sticky;top:0;z-index:2;background:#fff9f3f5;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:16px 32px;display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.filters{display:flex;gap:8px;flex-wrap:wrap}.filters button{background:transparent;border:1px solid var(--line);border-radius:24px;padding:8px 18px;cursor:pointer;color:var(--ink)}.filters button[aria-pressed=true]{background:var(--ink);color:white;border-color:var(--ink)}
+input{margin-left:auto;padding:10px 16px;max-width:300px;border:1px solid var(--line);border-radius:12px;background:white;color:var(--ink)}
+.count{color:var(--muted);font-size:13px;min-width:80px}
+main{max-width:1504px;margin:auto;padding:30px 32px 64px}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+.card{background:white;border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:0 8px 24px #203b3505}.card[hidden]{display:none}
+.preview{display:flex;height:340px;background:#f1ebe3;align-items:center;justify-content:center;overflow:hidden;padding:10px}.preview img{display:block;width:100%;height:100%;object-fit:contain;transition:transform .2s}.preview:hover img{transform:scale(1.025)}
+.details{padding:20px}.number{font-size:10px;font-weight:700;letter-spacing:.12em;color:var(--muted)}h2{font-size:19px;line-height:1.3;font-weight:600;margin:8px 0 18px}.actions{display:flex;flex-wrap:wrap;gap:16px;font-size:13px}
+footer{border-top:1px solid var(--line);padding:28px 32px 40px;color:var(--muted);font-size:14px}.footer-inner{max-width:1440px;margin:auto}
+dialog{border:0;border-radius:18px;max-width:min(96vw,1600px);width:96vw;max-height:96vh;padding:18px;background:var(--paper);color:var(--ink)}dialog::backdrop{background:#132c29dc}
+.dialog-bar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:12px}.dialog-bar h2{margin:0;flex:1}.dialog-bar button{border:1px solid var(--line);background:white;border-radius:10px;padding:8px 14px;cursor:pointer;color:var(--ink)}.dialog-bar a{font-size:14px}
+#full-image{display:block;width:100%;height:76vh;object-fit:contain}.empty{padding:30px;font-size:18px}.sr{position:absolute;clip:rect(0,0,0,0);width:1px;height:1px;overflow:hidden}
+@media(max-width:1100px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:640px){header{padding:36px 20px 24px}.toolbar{padding:12px 20px}input{margin:0;max-width:none;width:100%}main{padding:20px}.grid{grid-template-columns:1fr}.preview{height:360px}.count{margin-left:auto}.dialog-bar h2{flex-basis:100%;font-size:17px}#full-image{height:68vh}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style></head><body>
+<header><div class="eyebrow">Little Bloom · Visual direction</div><h1>Small moments,<br>a world of possibilities.</h1>
+<p>A coordinated collection for the prenatal education and bonding web-app plan: 12 screen concepts and 12 standalone illustrations.</p>
+<div class="meta"><span>24 original PNG files</span><span>Ivory · Peach · Sage</span><span>Generated with the built-in image tool</span></div>
+<p>Screen images are visual concepts, not functional interfaces or final product copy. The written implementation plan remains authoritative. Open any image to view it in full.</p></header>
+<div class="toolbar"><div class="filters" role="group" aria-label="Image category"><button data-filter="all" aria-pressed="true">All images</button><button data-filter="ui" aria-pressed="false">Screen concepts</button><button data-filter="art" aria-pressed="false">Illustrations</button></div><label class="sr" for="search">Search images</label><input id="search" type="search" placeholder="Search this collection"><span class="count" id="count" role="status">24 images</span></div>
+<main><div class="grid"><article class="card" data-kind="ui" data-title="landing page">
+<a class="preview" href="01-landing-page.png" data-index="0" aria-label="Enlarge Landing page"><img src="01-landing-page.png" loading="eager" alt="Landing page" width="1586" height="992"></a>
+<div class="details"><span class="number">01 / SCREEN CONCEPT</span><h2>Landing page</h2><div class="actions"><a href="01-landing-page.png" target="_blank" rel="noopener">Open original</a><a href="01-landing-page.png" download>Download PNG</a></div></div></article>
+<article class="card" data-kind="ui" data-title="today dashboard · desktop">
+<a class="preview" href="02-today-desktop.png" data-index="1" aria-label="Enlarge Today dashboard · Desktop"><img src="02-today-desktop.png" loading="eager" alt="Today dashboard · Desktop" width="1586" height="992"></a>
+<div class="details"><span class="number">02 / SCREEN CONCEPT</span><h2>Today dashboard · Desktop</h2><div class="actions"><a href="02-today-desktop.png" target="_blank" rel="noopener">Open original</a><a href="02-today-desktop.png" download>Download PNG</a></div></div></article>
+<article class="card" data-kind="ui" data-title="today dashboard · mobile">
+<a class="preview" href="03-today-mobile.png" data-index="2" aria-label="Enlarge Today dashboard · Mobile"><img src="03-today-mobile.png" loading="eager" alt="Today dashboard · Mobile" width="941" height="1672"></a>
+<div class="details"><span class="number">03 / SCREEN CONCEPT</span><h2>Today dashboard · Mobile</h2><div class="actions"><a href="03-today-mobile.png" target="_blank" rel="noopener">Open original</a><a href="03-today-mobile.png" download>Download PNG</a></div></div></article>
+<article class="card" data-kind="ui" data-title="onboarding · mobile">
+<a class="preview" href="04-onboarding-mobile.png" data-index="3" aria-label="Enlarge Onboarding · Mobile"><img src="04-onboarding-mobile.png" loading="lazy" alt="Onboarding · Mobile" width="941" height="1672"></a>
+<div class="details"><span class="number">04 / SCREEN CONCEPT</span><h2>Onboarding · Mobile</h2><div class="actions"><a href="04-onboarding-mobile.png" target="_blank" rel="noopener">Open original</a><a href="04-onboarding-mobile.png" download>Download PNG</a></div></div></article>
+<article class="card" data-kind="ui" data-title="activity library · desktop">
+<a class="preview" href="05-explore-desktop.png" data-index="4" aria-label="Enlarge Activity library · Desktop"><img src="05-explore-desktop.png" loading="lazy" alt="Activity library · Desktop" width="1586" height="992"></a>
+<div class="details"><span class="number">05 / SCREEN CONCEPT</span><h2>Activity library · Desktop</h2><div class="actions"><a href="05-explore-desktop.png" target="_blank" rel="noopener">Open original</a><a href="05-explore-desktop.png" download>Download PNG</a></div></div></article>
+<article class="card" data-kind="ui" data-title="story reading · mobile">
+<a class="preview" href="06-story-mobile.png" data-index="5" aria-label="Enlarge Story reading · Mobile"><img src="06-story-mobile.png" loading="lazy" alt="Story reading · Mobile" width="941" height="1672"></a>
+<div class="details"><span class="number">06 / SCREEN CONCEPT</span><h2>Story reading · Mobile</h2><div class="actions"><a href="06-story-mobile.png" target="_blank" rel="noopener">Open original</a><a href="06-story-mobile.png" download>Download PNG</a></div></div></article>
+<article class="card" data-kind="ui" data-title="voice recorder · mobile">
+<a class="preview" href="07-recording-mobile.png" data-index="6" aria-label="Enlarge Voice recorder · Mobile"><img src="07-recording-mobile.png" loading="lazy" alt="Voice recorder · Mobile" width="941" height="1672"></a>
+<div class="details"><span class="number">07 / SCREEN CONCEPT</span><h2>Voice recorder · Mobile</h2><div class="actions"><a href="07-recording-mobile.png" target="_blank" rel="noopener">Open original</a><a href="07-recording-mobile.png" download>Download PNG</a></div></div></article>
+<article class="card" data-kind="ui" data-title="memories · desktop">
+<a class="preview" href="08-memories-desktop.png" data-index="7" aria-label="Enlarge Memories · Desktop"><img src="08-memories-desktop.png" loading="lazy" alt="Memories · Desktop" width="1586" height="992"></a>
+<div class="details"><span class="number">08 / SCREEN CONCEPT</span><h2>Memories · Desktop</h2><div class="actions"><a href="08-memories-desktop.png" target="_blank" rel="noopener">Open original</a><a href="08-memories-desktop.png" download>Download PNG</a></div></div></article>
+<article class="card" data-kind="ui" data-title="partner invitation · mobile">
+<a class="preview" href="09-partner-mobile.png" data-index="8" aria-label="Enlarge Partner invitation · Mobile"><img src="09-partner-mobile.png" loading="lazy" alt="Partner invitation · Mobile" width="941" height="1672"></a>
+<div class="details"><span class="number">09 / SCREEN CONCEPT</span><h2>Partner invitation · Mobile</h2><div class="actions"><a href="09-partner-mobile.png" target="_blank" rel="noopener">Open original</a><a href="09-partner-mobile.png" download>Download PNG</a></div></div></article>
+<article class="card" data-kind="ui" data-title="privacy and settings · mobile">
+<a class="preview" href="10-privacy-mobile.png" data-index="9" aria-label="Enlarge Privacy and settings · Mobile"><img src="10-privacy-mobile.png" loading="lazy" alt="Privacy and settings · Mobile" width="941" height="1672"></a>
+<div class="details"><span class="number">10 / SCREEN CONCEPT</span><h2>Privacy and settings · Mobile</h2><div class="actions"><a href="10-privacy-mobile.png" target="_blank" rel="noopener">Open original</a><a href="10-privacy-mobile.png" download>Download PNG</a></div></div></article>
+<article class="card" data-kind="ui" data-title="editorial dashboard">
+<a class="preview" href="11-admin-desktop.png" data-index="10" aria-label="Enlarge Editorial dashboard"><img src="11-admin-desktop.png" loading="lazy" alt="Editorial dashboard" width="1586" height="992"></a>
+<div class="details"><span class="number">11 / SCREEN CONCEPT</span><h2>Editorial dashboard</h2><div class="actions"><a href="11-admin-desktop.png" target="_blank" rel="noopener">Open original</a><a href="11-admin-desktop.png" download>Download PNG</a></div></div></article>
+<article class="card" data-kind="ui" data-title="14-activity program">
+<a class="preview" href="12-program-desktop.png" data-index="11" aria-label="Enlarge 14-activity program"><img src="12-program-desktop.png" loading="lazy" alt="14-activity program" width="1586" height="992"></a>
+<div class="details"><span class="number">12 / SCREEN CONCEPT</span><h2>14-activity program</h2><div class="actions"><a href="12-program-desktop.png" target="_blank" rel="noopener">Open original</a><a href="12-program-desktop.png" download>Download PNG</a></div></div></article>
+<article class="card" data-kind="art" data-title="family reading · hero">
+<a class="preview" href="13-family-reading-hero.png" data-index="12" aria-label="Enlarge Family reading · Hero"><img src="13-family-reading-hero.png" loading="lazy" alt="Family reading · Hero" width="1586" height="992"></a>
+<div class="details"><span class="number">13 / ILLUSTRATION</span><h2>Family reading · Hero</h2><div class="actions"><a href="13-family-reading-hero.png" target="_blank" rel="noopener">Open original</a><a href="13-family-reading-hero.png" download>Download PNG</a></div></div></article>
+<article class="card" data-kind="art" data-title="solo reading">
+<a class="preview" href="14-solo-reading.png" data-index="13" aria-label="Enlarge Solo reading"><img src="14-solo-reading.png" loading="lazy" alt="Solo reading" width="1586" height="992"></a>
+<div class="details"><span class="number">14 / ILLUSTRATION</span><h2>Solo reading</h2><div class="actions"><a href="14-solo-reading.png" target="_blank" rel="noopener">Open original</a><a href="14-solo-reading.png" download>Download PNG</a></div></div></article>
+<article class="card" data-kind="art" data-title="partner voice memory">
+<a class="preview" href="15-partner-voice-memory.png" data-index="14" aria-label="Enlarge Partner voice memory"><img src="15-partner-voice-memory.png" loading="lazy" alt="Partner voice memory" width="1586" height="992"></a>
+<div class="details"><span class="number">15 / ILLUSTRATION</span><h2>Partner voice memory</h2><div class="actions"><a href="15-partner-voice-memory.png" target="_blank" rel="noopener">Open original</a><a href="15-partner-voice-memory.png" download>Download PNG</a></div></div></article>
+<article class="card" data-kind="art" data-title="a shared conversation">
+<a class="preview" href="16-couple-conversation.png" data-index="15" aria-label="Enlarge A shared conversation"><img src="16-couple-conversation.png" loading="lazy" alt="A shared conversation" width="1586" height="992"></a>
+<div class="details"><span class="number">16 / ILLUSTRATION</span><h2>A shared conversation</h2><div class="actions"><a href="16-couple-conversation.png" target="_blank" rel="noopener">Open original</a><a href="16-couple-conversation.png" download>Download PNG</a></div></div></article>
+<article class="card" data-kind="art" data-title="a quiet pause">
+<a class="preview" href="17-quiet-pause.png" data-index="16" aria-label="Enlarge A quiet pause"><img src="17-quiet-pause.png" loading="lazy" alt="A quiet pause" width="1586" height="992"></a>
+<div class="details"><span class="number">17 / ILLUSTRATION</span><h2>A quiet pause</h2><div class="actions"><a href="17-quiet-pause.png" target="_blank" rel="noopener">Open original</a><a href="17-quiet-pause.png" download>Download PNG</a></div></div></article>
+<article class="card" data-kind="art" data-title="family journal">
+<a class="preview" href="18-family-journal.png" data-index="17" aria-label="Enlarge Family journal"><img src="18-family-journal.png" loading="lazy" alt="Family journal" width="1586" height="992"></a>
+<div class="details"><span class="number">18 / ILLUSTRATION</span><h2>Family journal</h2><div class="actions"><a href="18-family-journal.png" target="_blank" rel="noopener">Open original</a><a href="18-family-journal.png" download>Download PNG</a></div></div></article>
+<article class="card" data-kind="art" data-title="the little garden · story cover">
+<a class="preview" href="19-story-garden.png" data-index="18" aria-label="Enlarge The little garden · Story cover"><img src="19-story-garden.png" loading="lazy" alt="The little garden · Story cover" width="1586" height="992"></a>
+<div class="details"><span class="number">19 / ILLUSTRATION</span><h2>The little garden · Story cover</h2><div class="actions"><a href="19-story-garden.png" target="_blank" rel="noopener">Open original</a><a href="19-story-garden.png" download>Download PNG</a></div></div></article>
+<article class="card" data-kind="art" data-title="evening quiet · audio cover">
+<a class="preview" href="20-lullaby-night.png" data-index="19" aria-label="Enlarge Evening quiet · Audio cover"><img src="20-lullaby-night.png" loading="lazy" alt="Evening quiet · Audio cover" width="1586" height="992"></a>
+<div class="details"><span class="number">20 / ILLUSTRATION</span><h2>Evening quiet · Audio cover</h2><div class="actions"><a href="20-lullaby-night.png" target="_blank" rel="noopener">Open original</a><a href="20-lullaby-night.png" download>Download PNG</a></div></div></article>
+<article class="card" data-kind="art" data-title="connection across distance">
+<a class="preview" href="21-long-distance-connection.png" data-index="20" aria-label="Enlarge Connection across distance"><img src="21-long-distance-connection.png" loading="lazy" alt="Connection across distance" width="1586" height="992"></a>
+<div class="details"><span class="number">21 / ILLUSTRATION</span><h2>Connection across distance</h2><div class="actions"><a href="21-long-distance-connection.png" target="_blank" rel="noopener">Open original</a><a href="21-long-distance-connection.png" download>Download PNG</a></div></div></article>
+<article class="card" data-kind="art" data-title="revisiting a shared moment">
+<a class="preview" href="22-shared-favorite-moment.png" data-index="21" aria-label="Enlarge Revisiting a shared moment"><img src="22-shared-favorite-moment.png" loading="lazy" alt="Revisiting a shared moment" width="1586" height="992"></a>
+<div class="details"><span class="number">22 / ILLUSTRATION</span><h2>Revisiting a shared moment</h2><div class="actions"><a href="22-shared-favorite-moment.png" target="_blank" rel="noopener">Open original</a><a href="22-shared-favorite-moment.png" download>Download PNG</a></div></div></article>
+<article class="card" data-kind="art" data-title="botanical welcome background">
+<a class="preview" href="23-welcome-botanical.png" data-index="22" aria-label="Enlarge Botanical welcome background"><img src="23-welcome-botanical.png" loading="lazy" alt="Botanical welcome background" width="1586" height="992"></a>
+<div class="details"><span class="number">23 / ILLUSTRATION</span><h2>Botanical welcome background</h2><div class="actions"><a href="23-welcome-botanical.png" target="_blank" rel="noopener">Open original</a><a href="23-welcome-botanical.png" download>Download PNG</a></div></div></article>
+<article class="card" data-kind="art" data-title="family keepsakes">
+<a class="preview" href="24-memory-keepsakes.png" data-index="23" aria-label="Enlarge Family keepsakes"><img src="24-memory-keepsakes.png" loading="lazy" alt="Family keepsakes" width="1586" height="992"></a>
+<div class="details"><span class="number">24 / ILLUSTRATION</span><h2>Family keepsakes</h2><div class="actions"><a href="24-memory-keepsakes.png" target="_blank" rel="noopener">Open original</a><a href="24-memory-keepsakes.png" download>Download PNG</a></div></div></article></div><p class="empty" id="empty" hidden>No matching images. Try another title or category.</p></main>
+<footer><div class="footer-inner">Open this file directly in your browser; no account, installation, hosting, or external service is needed. <a href="prompts.json">View all generation prompts</a> · <a href="READ-ME.txt">Read collection notes</a></div></footer>
+<dialog id="viewer" aria-labelledby="viewer-title"><div class="dialog-bar"><h2 id="viewer-title"></h2><button id="previous" aria-label="Previous image">Previous</button><button id="next" aria-label="Next image">Next</button><a id="download" download>Download PNG</a><button id="close">Close</button></div><img id="full-image" alt=""></dialog>
+<script>
+const images=[{"src":"01-landing-page.png","title":"Landing page"},{"src":"02-today-desktop.png","title":"Today dashboard · Desktop"},{"src":"03-today-mobile.png","title":"Today dashboard · Mobile"},{"src":"04-onboarding-mobile.png","title":"Onboarding · Mobile"},{"src":"05-explore-desktop.png","title":"Activity library · Desktop"},{"src":"06-story-mobile.png","title":"Story reading · Mobile"},{"src":"07-recording-mobile.png","title":"Voice recorder · Mobile"},{"src":"08-memories-desktop.png","title":"Memories · Desktop"},{"src":"09-partner-mobile.png","title":"Partner invitation · Mobile"},{"src":"10-privacy-mobile.png","title":"Privacy and settings · Mobile"},{"src":"11-admin-desktop.png","title":"Editorial dashboard"},{"src":"12-program-desktop.png","title":"14-activity program"},{"src":"13-family-reading-hero.png","title":"Family reading · Hero"},{"src":"14-solo-reading.png","title":"Solo reading"},{"src":"15-partner-voice-memory.png","title":"Partner voice memory"},{"src":"16-couple-conversation.png","title":"A shared conversation"},{"src":"17-quiet-pause.png","title":"A quiet pause"},{"src":"18-family-journal.png","title":"Family journal"},{"src":"19-story-garden.png","title":"The little garden · Story cover"},{"src":"20-lullaby-night.png","title":"Evening quiet · Audio cover"},{"src":"21-long-distance-connection.png","title":"Connection across distance"},{"src":"22-shared-favorite-moment.png","title":"Revisiting a shared moment"},{"src":"23-welcome-botanical.png","title":"Botanical welcome background"},{"src":"24-memory-keepsakes.png","title":"Family keepsakes"}];
+const cards=Array.from(document.querySelectorAll('.card')),viewer=document.getElementById('viewer'),full=document.getElementById('full-image');
+let category='all',selected=0;
+function filter(){const query=document.getElementById('search').value.trim().toLowerCase();let n=0;cards.forEach(c=>{c.hidden=!((category==='all'||c.dataset.kind===category)&&c.dataset.title.includes(query));if(!c.hidden)n++});document.getElementById('count').textContent=n+' images';document.getElementById('empty').hidden=n!==0}
+document.querySelectorAll('[data-filter]').forEach(b=>b.addEventListener('click',()=>{category=b.dataset.filter;document.querySelectorAll('[data-filter]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));filter()}));
+document.getElementById('search').addEventListener('input',filter);
+function show(i){selected=(i+images.length)%images.length;const item=images[selected];full.src=item.src;full.alt=item.title;document.getElementById('viewer-title').textContent=(selected+1)+' / '+images.length+' · '+item.title;document.getElementById('download').href=item.src;if(!viewer.open)viewer.showModal()}
+document.querySelectorAll('[data-index]').forEach(a=>a.addEventListener('click',e=>{if(typeof viewer.showModal!=='function')return;e.preventDefault();show(Number(a.dataset.index))}));
+document.getElementById('close').addEventListener('click',()=>viewer.close());
+document.getElementById('previous').addEventListener('click',()=>show(selected-1));document.getElementById('next').addEventListener('click',()=>show(selected+1));
+viewer.addEventListener('click',e=>{if(e.target===viewer)viewer.close()});
+document.addEventListener('keydown',e=>{if(!viewer.open)return;if(e.key==='ArrowRight'){e.preventDefault();show(selected+1)}if(e.key==='ArrowLeft'){e.preventDefault();show(selected-1)}});
+</script></body></html>

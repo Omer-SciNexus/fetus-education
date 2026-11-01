@@ -1,0 +1,83 @@
+LITTLE BLOOM VISUAL PACK
+
+24 PNG images: 12 interface concepts and 12 standalone illustrations.
+Generated with the built-in image_gen tool. No CLI/API fallback was used.
+
+HOW TO VIEW
+Extract the complete ZIP, then open visual-pack/index.html in a browser.
+The gallery runs locally without internet access or external libraries.
+Use the filters or search, click an image, and use Previous/Next or arrow keys.
+Each PNG is also available individually in this folder.
+
+USAGE NOTES
+These are design concepts and creative illustrations, not screenshots of a built application.
+UI wording, fonts, icon choices, navigation placement, and minor details vary between images.
+Use the detailed Markdown plan as the authoritative behavior and scope specification.
+Any generated sample health-related wording requires editorial review before use in a real product.
+Keep text and interactive controls as accessible HTML when implementing the app.
+Some mockups use illustrated photo-like cards as decorative artwork; they do not add photo-upload scope.
+Standalone illustrations contain no deliberate medical anatomy or diagnostic diagrams.
+All characters and sample records are fictional.
+Original generated PNGs were copied without pixel editing, resizing, or cropping.
+Transparent cutouts and optimized web exports are not included in this pack.
+
+FILES
+index.html: local browsable gallery
+prompts.json: exact prompt used for every image
+manifest.json: filenames, dimensions, sizes, and integrity hashes
+01 through 12: interface concepts
+13 through 24: standalone illustration assets
+
+IMAGE INDEX
+01  Landing page
+    01-landing-page.png
+02  Today dashboard · Desktop
+    02-today-desktop.png
+03  Today dashboard · Mobile
+    03-today-mobile.png
+04  Onboarding · Mobile
+    04-onboarding-mobile.png
+05  Activity library · Desktop
+    05-explore-desktop.png
+06  Story reading · Mobile
+    06-story-mobile.png
+07  Voice recorder · Mobile
+    07-recording-mobile.png
+08  Memories · Desktop
+    08-memories-desktop.png
+09  Partner invitation · Mobile
+    09-partner-mobile.png
+10  Privacy and settings · Mobile
+    10-privacy-mobile.png
+11  Editorial dashboard
+    11-admin-desktop.png
+12  14-activity program
+    12-program-desktop.png
+13  Family reading · Hero
+    13-family-reading-hero.png
+14  Solo reading
+    14-solo-reading.png
+15  Partner voice memory
+    15-partner-voice-memory.png
+16  A shared conversation
+    16-couple-conversation.png
+17  A quiet pause
+    17-quiet-pause.png
+18  Family journal
+    18-family-journal.png
+19  The little garden · Story cover
+    19-story-garden.png
+20  Evening quiet · Audio cover
+    20-lullaby-night.png
+21  Connection across distance
+    21-long-distance-connection.png
+22  Revisiting a shared moment
+    22-shared-favorite-moment.png
+23  Botanical welcome background
+    23-welcome-botanical.png
+24  Family keepsakes
+    24-memory-keepsakes.png
+
+PROJECT PLAN
+The companion document is LITTLE_BLOOM_DETAILED_WEB_APP_PLAN.md in the project root.
+

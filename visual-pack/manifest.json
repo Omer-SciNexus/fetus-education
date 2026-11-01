@@ -1,0 +1,221 @@
+{
+  "generator": "built-in image_gen",
+  "images": [
+    {
+      "id": "01-landing-page",
+      "category": "ui",
+      "file": "01-landing-page.png",
+      "width": 1586,
+      "height": 992,
+      "bytes": 1863655,
+      "sha256": "d85f75b99d1dd1c89fa5245c8899946e3987ec4955611ea19064f774446a8fdd"
+    },
+    {
+      "id": "02-today-desktop",
+      "category": "ui",
+      "file": "02-today-desktop.png",
+      "width": 1586,
+      "height": 992,
+      "bytes": 2041070,
+      "sha256": "51bc724a2b57842f8a522eef496bb3012fa1cf1ec1930a21e54a28c73fbe0879"
+    },
+    {
+      "id": "03-today-mobile",
+      "category": "ui",
+      "file": "03-today-mobile.png",
+      "width": 941,
+      "height": 1672,
+      "bytes": 1842235,
+      "sha256": "f2beb5908ddd1573b0b1f144f49c3f51c8439046c362dbe8fa0583b92ed233f1"
+    },
+    {
+      "id": "04-onboarding-mobile",
+      "category": "ui",
+      "file": "04-onboarding-mobile.png",
+      "width": 941,
+      "height": 1672,
+      "bytes": 1627620,
+      "sha256": "2e211beab3905153160adb5c94287080a137e1bbcba6fccd6ce18afde074dd1a"
+    },
+    {
+      "id": "05-explore-desktop",
+      "category": "ui",
+      "file": "05-explore-desktop.png",
+      "width": 1586,
+      "height": 992,
+      "bytes": 1922687,
+      "sha256": "7a076edbaf108117a4f11883821c431ac80fcc779e4bdf08007847e3c0880807"
+    },
+    {
+      "id": "06-story-mobile",
+      "category": "ui",
+      "file": "06-story-mobile.png",
+      "width": 941,
+      "height": 1672,
+      "bytes": 1875324,
+      "sha256": "51d6c9447d9a2b18beb265e85bf6152852450f1cf025482dbb1460c288aeff26"
+    },
+    {
+      "id": "07-recording-mobile",
+      "category": "ui",
+      "file": "07-recording-mobile.png",
+      "width": 941,
+      "height": 1672,
+      "bytes": 1307925,
+      "sha256": "8d555de7161fb27d2b3fd85f9a2b4da5c5fdae5ae1956dc420d8dd45084fa312"
+    },
+    {
+      "id": "08-memories-desktop",
+      "category": "ui",
+      "file": "08-memories-desktop.png",
+      "width": 1586,
+      "height": 992,
+      "bytes": 1783990,
+      "sha256": "8b770fa4af46baea23d5de1d077ada2b4cbbbb33f4db6a9115fc8758d1aa915f"
+    },
+    {
+      "id": "09-partner-mobile",
+      "category": "ui",
+      "file": "09-partner-mobile.png",
+      "width": 941,
+      "height": 1672,
+      "bytes": 1740617,
+      "sha256": "6504ef35c7b89f880a39c2140293c9a8ee31af9a9fcc438e382ed5ad0c8a47b3"
+    },
+    {
+      "id": "10-privacy-mobile",
+      "category": "ui",
+      "file": "10-privacy-mobile.png",
+      "width": 940,
+      "height": 1672,
+      "bytes": 1390278,
+      "sha256": "839dd10dce40fed12e03d5c54471ba540d6ccd1d41012d9df132bdfd767ec147"
+    },
+    {
+      "id": "11-admin-desktop",
+      "category": "ui",
+      "file": "11-admin-desktop.png",
+      "width": 1586,
+      "height": 992,
+      "bytes": 1544807,
+      "sha256": "734dcccde8f287e3e6f20bce4b7f0848eb81ec873a6538af426784a2347e02f7"
+    },
+    {
+      "id": "12-program-desktop",
+      "category": "ui",
+      "file": "12-program-desktop.png",
+      "width": 1586,
+      "height": 992,
+      "bytes": 1722118,
+      "sha256": "09ef206d36794c8016a9b47ef5ec3d30ad4e360e89ed63f43ae5cc00c31f418b"
+    },
+    {
+      "id": "13-family-reading-hero",
+      "category": "art",
+      "file": "13-family-reading-hero.png",
+      "width": 1672,
+      "height": 941,
+      "bytes": 2224814,
+      "sha256": "5832b73321708f7603b92638ee0c4d12fa2385037ac9dfa8a9b94c048e91eca2"
+    },
+    {
+      "id": "14-solo-reading",
+      "category": "art",
+      "file": "14-solo-reading.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 2609168,
+      "sha256": "fc2a0eda5be17e7e3ae2757142c163bf928619c7e71a9cfb861b7b608679b282"
+    },
+    {
+      "id": "15-partner-voice-memory",
+      "category": "art",
+      "file": "15-partner-voice-memory.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 2295340,
+      "sha256": "917e4184e33d9e8a154e7863d79001dd134a371511b3bbb6e848ecabd22a866b"
+    },
+    {
+      "id": "16-couple-conversation",
+      "category": "art",
+      "file": "16-couple-conversation.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 2513404,
+      "sha256": "1e3228ce957f73509703ff492d8cab6ba6e19c8bcd800aa6007e7d6527ae0f31"
+    },
+    {
+      "id": "17-quiet-pause",
+      "category": "art",
+      "file": "17-quiet-pause.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 2844737,
+      "sha256": "24ed85afb3bba17162384f450a1d6ddb1a197bea28561f065d0e84f194eece5d"
+    },
+    {
+      "id": "18-family-journal",
+      "category": "art",
+      "file": "18-family-journal.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 2783623,
+      "sha256": "80f2e1f5f51a0404a2b352be4bc959b9ee89ef99de6be1e0c4db09bf8ad20a7c"
+    },
+    {
+      "id": "19-story-garden",
+      "category": "art",
+      "file": "19-story-garden.png",
+      "width": 1672,
+      "height": 941,
+      "bytes": 2830669,
+      "sha256": "82ca0b5743b135a44c1fe57a6aa71145f6b783a93b900826abd04563ddcf4a65"
+    },
+    {
+      "id": "20-lullaby-night",
+      "category": "art",
+      "file": "20-lullaby-night.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 2496757,
+      "sha256": "bb7f95fb32b770d67a9054b0e4b447d51f3af87ab4f2b8b6ff1390daf5cd005a"
+    },
+    {
+      "id": "21-long-distance-connection",
+      "category": "art",
+      "file": "21-long-distance-connection.png",
+      "width": 1672,
+      "height": 941,
+      "bytes": 2431712,
+      "sha256": "3504e52b7a8384779e444dd30f8555c539b75d036c456d08f73008624523d028"
+    },
+    {
+      "id": "22-shared-favorite-moment",
+      "category": "art",
+      "file": "22-shared-favorite-moment.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 2431075,
+      "sha256": "8312aed2e8b31afd1e9fade7e1d5db81571e7c6d5070cfcecd0b83ea785230c7"
+    },
+    {
+      "id": "23-welcome-botanical",
+      "category": "art",
+      "file": "23-welcome-botanical.png",
+      "width": 1672,
+      "height": 941,
+      "bytes": 2073944,
+      "sha256": "1126c3fc621bc16eba5a21404bcdcd89e067432cbbc335fce02cf5e09951a75c"
+    },
+    {
+      "id": "24-memory-keepsakes",
+      "category": "art",
+      "file": "24-memory-keepsakes.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 2764647,
+      "sha256": "a81ecc52fbf58873a84fbdc36a869aaab3a6507f47709d37ac1cc8d87f518ed9"
+    }
+  ]
+}
