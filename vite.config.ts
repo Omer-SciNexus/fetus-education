@@ -16,10 +16,13 @@ export default defineConfig({
     sourcemap: false,
     rollupOptions: {
       output: {
-        manualChunks: {
-          react: ['react', 'react-dom', 'react-router'],
-          supabase: ['@supabase/supabase-js'],
-          query: ['@tanstack/react-query'],
+        // Keep vendor libraries in separate cacheable chunks.
+        manualChunks(id) {
+          const path = id.replace(/\\/g, '/')
+          if (!path.includes('/node_modules/')) return
+          if (/\/node_modules\/(react|react-dom|react-router|scheduler)\//.test(path)) return 'react'
+          if (path.includes('/node_modules/@supabase/')) return 'supabase'
+          if (path.includes('/node_modules/@tanstack/')) return 'query'
         },
       },
     },
