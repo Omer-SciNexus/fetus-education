@@ -33,7 +33,12 @@ export interface MyContext {
   profile: Profile
   admitted: boolean
   membership: { family_id: string; role: 'owner' | 'partner'; joined_at: string } | null
-  pregnancy: { stage: Stage | null; due_date: string | null; share_with_partner: boolean } | null
+  pregnancy: {
+    stage: Stage | null
+    due_date: string | null
+    share_with_partner: boolean
+    nickname?: string | null
+  } | null
   roles: AdminRole[]
   pending_deletion: boolean
 }
@@ -122,6 +127,23 @@ export interface Recording {
   duration_seconds: number | null
   state: 'reserved' | 'active' | 'failed' | 'deleting'
   expires_at: string
+}
+
+export type PlanList = 'bag' | 'questions' | 'names'
+
+export interface PlanItem {
+  id: string
+  family_id: string
+  author_id: string
+  list: PlanList
+  label: string
+  note: string
+  done: boolean
+  visibility: Visibility
+  created_at: string
+  updated_at: string
+  /** User ids of everyone (visible to the caller) who hearted this name. */
+  hearts: { user_id: string }[]
 }
 
 export interface FamilyOverview {

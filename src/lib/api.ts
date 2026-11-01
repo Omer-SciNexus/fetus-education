@@ -9,6 +9,8 @@ import type {
   FamilyOverview,
   Memory,
   MyContext,
+  PlanItem,
+  PlanList,
   Preferences,
   PublishedItem,
   Recording,
@@ -59,7 +61,7 @@ export async function updateProfile(
 
 export async function updatePregnancy(
   familyId: string,
-  patch: Partial<{ stage: Stage | null; due_date: string | null; share_with_partner: boolean }>,
+  patch: Partial<{ stage: Stage | null; due_date: string | null; share_with_partner: boolean; nickname: string | null }>,
 ) {
   unwrap(await supabase.from('pregnancy_profiles').update(patch).eq('family_id', familyId))
 }
@@ -201,6 +203,54 @@ export async function createTextMemory(input: {
 
 export async function updateMemory(id: string, patch: { title?: string; body?: string; visibility?: Visibility }) {
   unwrap(await supabase.from('memories').update(patch).eq('id', id))
+}
+
+// ---------------------------------------------------------------- family plan
+export async function listPlanItems(): Promise<PlanItem[]> {
+  return unwrap(
+    await supabase
+      .from('family_list_items')
+      .select('*, hearts:name_hearts(user_id)')
+      .order('created_at', { ascending: true }),
+  ) as PlanItem[]
+}
+
+export async function addPlanItem(input: {
+  list: PlanList
+  label: string
+  note: string
+  visibility: Visibility
+}): Promise<string> {
+  return unwrap(
+    await supabase.rpc('add_list_item', {
+      p_list: input.list,
+      p_label: input.label,
+      p_note: input.note,
+      p_visibility: input.visibility,
+    }),
+  ) as string
+}
+
+export async function setPlanItemDone(id: string, done: boolean) {
+  unwrap(await supabase.rpc('set_list_item_done', { p_item: id, p_done: done }))
+}
+
+export async function updatePlanItem(id: string, patch: { label?: string; note?: string; visibility?: Visibility }) {
+  unwrap(await supabase.from('family_list_items').update(patch).eq('id', id))
+}
+
+export async function deletePlanItem(id: string) {
+  unwrap(await supabase.from('family_list_items').delete().eq('id', id))
+}
+
+export async function setNameHeart(userId: string, itemId: string, on: boolean) {
+  if (on) {
+    const { error } = await supabase.from('name_hearts').insert({ user_id: userId, item_id: itemId })
+    // Duplicate heart = already on.
+    if (error && (error as { code?: string }).code !== '23505') throw error
+  } else {
+    unwrap(await supabase.from('name_hearts').delete().eq('user_id', userId).eq('item_id', itemId))
+  }
 }
 
 // ---------------------------------------------------------------- family

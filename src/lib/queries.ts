@@ -12,6 +12,11 @@ export const keys = {
   memory: (id: string) => ['memory', id] as const,
   recording: (memoryId: string) => ['recording', memoryId] as const,
   family: ['family'] as const,
+  plan: ['plan'] as const,
+}
+
+export function usePlan() {
+  return useQuery({ queryKey: keys.plan, queryFn: api.listPlanItems })
 }
 
 export function usePublished() {

@@ -38,6 +38,10 @@ const messages: Record<string, string> = {
   content_version_locked: 'Reviewed versions cannot be edited. Create a new version instead.',
   user_not_found: 'No account with that email has signed in yet.',
   reauth_required: 'For your security, please sign in again to confirm.',
+  invalid_list: 'That list is not available.',
+  list_item_empty: 'Write something before adding it.',
+  list_item_too_long: 'Keep entries to 120 characters, with notes up to 300.',
+  list_item_limit: 'Your family has reached the pilot limit of 300 plan entries.',
 }
 
 export function errorCode(error: unknown): string | null {
