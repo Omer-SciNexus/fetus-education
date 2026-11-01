@@ -21,8 +21,25 @@ export function HelpPage() {
       <PageHeader title="Help" />
       <Notice tone="error" title="If you are worried about your health or your baby">
         Contact your midwife, doctor or maternity unit straight away, or your local emergency number in an
-        emergency. Little Bloom cannot assess symptoms or monitor your pregnancy.
+        emergency. Little Bloom cannot assess symptoms or monitor your pregnancy. This includes your baby’s movements:
+        if they slow down, stop or change, contact your maternity unit straight away rather than waiting.
       </Notice>
+
+      <h2>Toolkit</h2>
+      <ul>
+        <li>
+          <strong>Week by week</strong> shows typical, rounded information for each week. It is a general guide, not about
+          your baby, and it is hidden while pregnancy content is paused.
+        </li>
+        <li>
+          <strong>Family plan</strong> entries are private unless you tick “Share with my family partner”. Either of you can
+          tick off a shared entry, but only the person who added it can delete it.
+        </li>
+        <li>
+          <strong>Keepsake book</strong> is made in your browser. Use your browser’s print window and choose “Save as PDF” to
+          keep a copy.
+        </li>
+      </ul>
 
       <h2>Recording a voice memory</h2>
       <ul>
@@ -65,9 +82,10 @@ export function PrivacyPage() {
       <h2>What we collect</h2>
       <ul>
         <li>Your Google account name, email address and account identifier, used for sign-in.</li>
-        <li>Optional pregnancy details you choose to give: a stage or an estimated due date.</li>
+        <li>Optional pregnancy details you choose to give: a stage, an estimated due date or a bump nickname.</li>
         <li>Your preferences, completed activities and favourites.</li>
         <li>Memories you create: text notes and short voice recordings.</li>
+        <li>Family plan entries you add: packing items, questions for your care provider, baby names, and hearts on names.</li>
         <li>Pseudonymous usage events (for example "activity completed") with no content attached.</li>
       </ul>
       <p>We do not collect medical history, symptoms, precise location, contacts or advertising identifiers.</p>
