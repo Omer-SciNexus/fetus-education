@@ -72,3 +72,16 @@ export function isPlausibleDueDate(value: string, now: Date = new Date()): boole
   const today = todayUtc(now)
   return due >= today - 60 * DAY && due <= today + 300 * DAY
 }
+
+/**
+ * Estimated due date from the first day of the last menstrual period (Naegele's rule,
+ * LMP + 280 days). A rough estimate: a clinician's dating, for example from a scan, replaces it.
+ */
+export function dueDateFromLmp(lmp: string, now: Date = new Date()): string | null {
+  const start = parseDateOnly(lmp)
+  if (start === null) return null
+  const today = todayUtc(now)
+  // A last period in the future, or more than ~44 weeks ago, is a typo rather than a pregnancy.
+  if (start > today || start < today - 308 * DAY) return null
+  return toDateOnly(start + 280 * DAY)
+}
