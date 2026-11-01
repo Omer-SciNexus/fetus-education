@@ -12,6 +12,8 @@ tiers: React + Vite on Cloudflare Pages, and Supabase for the database, sign-in 
 | Area | Location |
 |---|---|
 | Frontend (all routes in plan §6) | `src/` |
+| Toolkit (week by week, little conversations, breathe, family plan, keepsake book) | `src/features/toolkit/`, `src/lib/weeks.ts`, `src/lib/prompts.ts` |
+| Review of other prenatal platforms, and which of their features were adopted or rejected | `docs/research/prenatal-platforms.md` |
 | Schema, RLS, storage policies, backend operations | `supabase/migrations/` |
 | Seed content (14 activities, 6 stories, 4 scripts, 12 cards) | `supabase/seed.sql` |
 | Account deletion Edge Function | `supabase/functions/delete-account/` |
