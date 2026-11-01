@@ -64,10 +64,18 @@ export default function MemoriesPage() {
         title="Your little collection"
         subtitle="Moments, thoughts and sounds for this special chapter."
         action={
-          <ButtonLink to="/memories/new">
-            <Icon name="plus" size={18} />
-            New memory
-          </ButtonLink>
+          <div className="flex flex-wrap gap-3">
+            {all.length > 0 && (
+              <ButtonLink to="/memories/book" variant="secondary">
+                <Icon name="printer" size={18} />
+                Keepsake book
+              </ButtonLink>
+            )}
+            <ButtonLink to="/memories/new">
+              <Icon name="plus" size={18} />
+              New memory
+            </ButtonLink>
+          </div>
         }
       />
 

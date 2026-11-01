@@ -1143,6 +1143,8 @@ button.menu-row:hover {
 .today-grid {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 300px;
+  /* The side column spans both rows; the second row absorbs its extra height so the tiles stay close. */
+  grid-template-rows: auto 1fr;
   gap: 24px;
   align-items: start;
 }
@@ -2294,6 +2296,7 @@ button.menu-row:hover {
   }
   .today-grid {
     grid-template-columns: 1fr;
+    grid-template-rows: none;
   }
   .today-grid > .dashboard-side {
     grid-column: 1;

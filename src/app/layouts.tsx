@@ -1,4 +1,4 @@
-import { Link, NavLink, Outlet, isRouteErrorResponse, useRouteError } from 'react-router'
+import { Link, NavLink, Outlet, isRouteErrorResponse, useLocation, useRouteError } from 'react-router'
 import { useAuth } from '@/lib/auth'
 import { ButtonLink, Logo, Notice, cx } from '@/components/ui'
 import { Icon, type IconName } from '@/components/Icon'
@@ -70,6 +70,9 @@ export function PublicLayout() {
   )
 }
 
+// Toolkit screens sit under "You", so that tab stays highlighted on them.
+const youPaths = ['/weeks', '/talk', '/breathe', '/plan']
+
 const nav: { to: string; label: string; icon: IconName }[] = [
   { to: '/today', label: 'Today', icon: 'home' },
   { to: '/explore', label: 'Explore', icon: 'compass' },
@@ -81,7 +84,9 @@ export function AppLayout() {
   const { ctx } = useAuth()
   const isAdmin = !!ctx?.roles.length
   const name = ctx?.profile.display_name || 'You'
-  const linkCls = ({ isActive }: { isActive: boolean }) => cx('side-link', isActive && 'active')
+  const { pathname } = useLocation()
+  const inYou = youPaths.some((p) => pathname === p || pathname.startsWith(`${p}/`))
+  const active = (to: string, isActive: boolean) => isActive || (to === '/settings' && inYou)
   return (
     <div className="app-shell">
       <SkipLink />
@@ -91,13 +96,13 @@ export function AppLayout() {
         </Link>
         <nav aria-label="Main">
           {nav.map((n) => (
-            <NavLink key={n.to} to={n.to} className={linkCls}>
+            <NavLink key={n.to} to={n.to} className={({ isActive }) => cx('side-link', active(n.to, isActive) && 'active')}>
               <Icon name={n.icon} size={22} />
               {n.label}
             </NavLink>
           ))}
           {isAdmin && (
-            <NavLink to="/admin" className={linkCls}>
+            <NavLink to="/admin" className={({ isActive }) => cx('side-link', isActive && 'active')}>
               <Icon name="grid" size={22} />
               Content studio
             </NavLink>
@@ -144,7 +149,7 @@ export function AppLayout() {
         <ul>
           {nav.map((n) => (
             <li key={n.to}>
-              <NavLink to={n.to} className={({ isActive }) => (isActive ? 'active' : '')}>
+              <NavLink to={n.to} className={({ isActive }) => (active(n.to, isActive) ? 'active' : '')}>
                 <Icon name={n.icon} />
                 {n.label}
               </NavLink>

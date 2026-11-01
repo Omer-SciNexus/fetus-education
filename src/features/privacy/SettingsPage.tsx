@@ -83,6 +83,31 @@ export default function SettingsPage() {
       </section>
 
       <section className="settings-group">
+        <h2>Your toolkit</h2>
+        <div className="settings-list">
+          {!ctx.profile.content_paused && (
+            <MenuRow
+              icon="calendar"
+              tone="peach"
+              title="Week by week"
+              description="What typically happens around each week."
+              to="/weeks"
+            />
+          )}
+          <MenuRow icon="chat" title="Little conversations" description="A daily idea for talking to your little one." to="/talk" />
+          <MenuRow icon="wind" title="Breathe" description="A slow breathing pacer, just for you." to="/breathe" />
+          <MenuRow
+            icon="bag"
+            tone="peach"
+            title="Family plan"
+            description="Hospital bag, questions and baby names."
+            to="/plan"
+          />
+          <MenuRow icon="printer" title="Keepsake book" description="Print your memories or save them as a PDF." to="/memories/book" />
+        </div>
+      </section>
+
+      <section className="settings-group">
         <h2>Your memories</h2>
         <div className="settings-list">
           <MenuRow

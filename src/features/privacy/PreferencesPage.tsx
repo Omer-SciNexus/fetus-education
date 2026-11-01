@@ -4,8 +4,8 @@ import { useAuth, useMember } from '@/lib/auth'
 import { updatePregnancy, updateProfile } from '@/lib/api'
 import { buildReminderIcs, type Weekday } from '@/lib/calendar'
 import { errorMessage } from '@/lib/errors'
-import { categoryLabels, downloadBlob } from '@/lib/format'
-import { estimateStage, isPlausibleDueDate, stageLabels, toDateOnly, todayUtc } from '@/lib/stage'
+import { categoryLabels, downloadBlob, formatDate } from '@/lib/format'
+import { dueDateFromLmp, estimateStage, isPlausibleDueDate, stageLabels, toDateOnly, todayUtc } from '@/lib/stage'
 import { Button, Card, ChoiceChip, Field, Notice, PageHeader, Segmented, TextInput } from '@/components/ui'
 import { Icon, type IconName } from '@/components/Icon'
 import type { Category, Stage } from '@/types/db'
@@ -33,6 +33,8 @@ export default function PreferencesPage() {
   const [mode, setMode] = useState<'solo' | 'shared'>(ctx.profile.preferences.use_mode ?? 'solo')
   const [stage, setStage] = useState<Stage | ''>(ctx.pregnancy?.stage ?? '')
   const [dueDate, setDueDate] = useState(ctx.pregnancy?.due_date ?? '')
+  const [nickname, setNickname] = useState(ctx.pregnancy?.nickname ?? '')
+  const [lmp, setLmp] = useState('')
   const [saved, setSaved] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [busy, setBusy] = useState<string | null>(null)
@@ -57,6 +59,7 @@ export default function PreferencesPage() {
 
   const dueErr = dueDate && !isPlausibleDueDate(dueDate) ? 'Enter a date within the next 10 months.' : null
   const est = dueDate && !dueErr ? estimateStage(dueDate) : null
+  const lmpDue = lmp ? dueDateFromLmp(lmp) : null
 
   const downloadReminder = () => {
     try {
@@ -137,15 +140,38 @@ export default function PreferencesPage() {
           <Field label="Estimated due date" error={dueErr} hint={est ? `Approximately ${stageLabels[est.stage].toLowerCase()} (an estimate). A due date takes priority over the stage above.` : 'Optional.'}>
             {(p) => <TextInput {...p} type="date" value={dueDate} onChange={(e) => setDueDate(e.target.value)} />}
           </Field>
+          <details className="lmp-helper">
+            <summary className="font-semibold">Don’t know your due date?</summary>
+            <div className="mt-3 space-y-3">
+              <Field
+                label="First day of your last period"
+                hint="We add 280 days, the usual rule of thumb. Your care provider’s date, for example from a scan, is more accurate."
+                error={lmp && !lmpDue ? 'Enter a date within the last 44 weeks.' : null}
+              >
+                {(p) => <TextInput {...p} type="date" value={lmp} onChange={(e) => setLmp(e.target.value)} />}
+              </Field>
+              {lmpDue && (
+                <Button variant="secondary" onClick={() => setDueDate(lmpDue)}>
+                  Use {formatDate(`${lmpDue}T12:00:00`)} as my estimated due date
+                </Button>
+              )}
+            </div>
+          </details>
+          <Field
+            label="Bump nickname (optional)"
+            hint={ctx.pregnancy?.share_with_partner ? 'Used in prompts and your keepsake book. Your partner sees it too.' : 'Used in prompts and your keepsake book.'}
+          >
+            {(p) => <TextInput {...p} value={nickname} maxLength={40} placeholder="e.g. Peanut" onChange={(e) => setNickname(e.target.value)} />}
+          </Field>
           <div className="flex flex-wrap gap-3">
             <Button
               loading={busy === 'preg'}
               disabled={!!dueErr}
-              onClick={() => run('preg', () => updatePregnancy(ctx.membership!.family_id, { stage: stage || null, due_date: dueDate || null }), 'Pregnancy details saved.')}
+              onClick={() => run('preg', () => updatePregnancy(ctx.membership!.family_id, { stage: stage || null, due_date: dueDate || null, nickname: nickname.trim() || null }), 'Pregnancy details saved.')}
             >
               Save details
             </Button>
-            <Button variant="ghost" onClick={() => { setStage(''); setDueDate('') }}>Clear</Button>
+            <Button variant="ghost" onClick={() => { setStage(''); setDueDate(''); setNickname('') }}>Clear</Button>
           </div>
         </Card>
       )}

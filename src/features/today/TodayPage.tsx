@@ -7,6 +7,10 @@ import { Badge, ButtonLink, Card, ErrorState, LoadingState, PageHeader } from '@
 import { Artwork, categoryArt } from '@/components/Artwork'
 import { Icon } from '@/components/Icon'
 import type { PublishedItem } from '@/types/db'
+import { dailyPrompt } from '@/lib/prompts'
+import { currentWeek, littleOne, WeekStrip } from '@/features/toolkit/shared'
+import { recordPromptLink } from '@/features/toolkit/TalkPage'
+import '@/features/toolkit/toolkit.css'
 
 function linkFor(item: PublishedItem) {
   return item.kind === 'education' ? `/learn/${item.slug}` : `/activities/${item.slug}`
@@ -62,6 +66,8 @@ export default function TodayPage() {
   const program = items.filter((i) => i.program_position !== null)
   const doneCount = program.filter((i) => completed.has(i.id)).length
   const name = ctx.profile.display_name
+  const week = currentWeek(ctx)
+  const prompt = dailyPrompt()
 
   return (
     <div>
@@ -69,6 +75,11 @@ export default function TodayPage() {
         title={`A little moment for you${name ? `, ${name}` : ''}`}
         subtitle={paused ? 'Here when you want it.' : 'Connection today, a brighter tomorrow.'}
       />
+      {week && (
+        <div className="mb-6">
+          <WeekStrip week={week} />
+        </div>
+      )}
       <div className="today-grid">
         <div className="today-top">
           {rec.next ? (
@@ -169,6 +180,21 @@ export default function TodayPage() {
               <Artwork name="quiet-pause" />
             </Card>
           )}
+          <Card className="today-talk">
+            <p className="eyebrow">Today’s little conversation</p>
+            <h2>{prompt}</h2>
+            <p className="text-sm text-ink-soft">
+              Say it to {littleOne(ctx)} in your everyday voice. A minute is plenty, and skipping is fine.
+            </p>
+            <div className="mt-4 flex flex-wrap gap-2">
+              <ButtonLink to={recordPromptLink(prompt)} variant="secondary">
+                <Icon name="mic" size={16} /> Record it
+              </ButtonLink>
+              <Link to="/talk" className="text-link self-center">
+                More ideas <Icon name="arrow" size={14} />
+              </Link>
+            </div>
+          </Card>
           <Card className="privacy-note">
             <span className="icon-tile">
               <Icon name="lock" size={20} />
