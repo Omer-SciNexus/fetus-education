@@ -10,23 +10,26 @@ import {
 } from 'react'
 import { Link, type LinkProps } from 'react-router'
 import { errorMessage } from '@/lib/errors'
+import { Artwork } from './Artwork'
+import { Icon, type IconName } from './Icon'
 
 export function cx(...parts: (string | false | null | undefined)[]) {
   return parts.filter(Boolean).join(' ')
 }
 
 // ---------------------------------------------------------------- buttons
-type Variant = 'primary' | 'secondary' | 'ghost' | 'danger'
+type Variant = 'primary' | 'secondary' | 'ghost' | 'danger' | 'sage' | 'light'
 
 const variants: Record<Variant, string> = {
-  primary: 'bg-peach-700 text-white hover:bg-peach-500 disabled:bg-peach-500/60',
-  secondary: 'bg-paper text-ink border border-line hover:bg-peach-50 disabled:opacity-60',
-  ghost: 'bg-transparent text-peach-700 hover:bg-peach-50 disabled:opacity-60',
-  danger: 'bg-danger text-white hover:opacity-90 disabled:opacity-60',
+  primary: 'btn-primary',
+  secondary: 'btn-secondary',
+  ghost: 'btn-ghost',
+  danger: 'btn-danger',
+  sage: 'btn-sage',
+  light: 'btn-light',
 }
 
-const base =
-  'inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5 text-[15px] font-semibold min-h-11 transition-colors disabled:cursor-not-allowed'
+const base = 'lb-button inline-flex items-center justify-center gap-2 disabled:cursor-not-allowed'
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: Variant
@@ -53,34 +56,147 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
   )
 })
 
-export function ButtonLink({ variant = 'primary', full, className, ...rest }: LinkProps & { variant?: Variant; full?: boolean }) {
+export function ButtonLink({
+  variant = 'primary',
+  full,
+  className,
+  ...rest
+}: LinkProps & { variant?: Variant; full?: boolean }) {
   return <Link className={cx(base, variants[variant], full && 'w-full', className)} {...rest} />
 }
 
-// ---------------------------------------------------------------- layout bits
-export function Card({ children, className, as: As = 'section' }: { children: ReactNode; className?: string; as?: 'section' | 'div' | 'article' | 'li' }) {
-  return <As className={cx('rounded-2xl border border-line bg-paper p-5 shadow-[0_1px_2px_rgba(43,38,32,0.04)]', className)}>{children}</As>
+/** Round icon button (bookmark, back, close). */
+export function IconButton({
+  label,
+  icon,
+  className,
+  ...rest
+}: ButtonHTMLAttributes<HTMLButtonElement> & { label: string; icon: IconName }) {
+  return (
+    <button type="button" aria-label={label} title={label} className={cx('icon-button', className)} {...rest}>
+      <Icon name={icon} size={20} />
+    </button>
+  )
 }
 
-export function PageHeader({ title, subtitle, action }: { title: string; subtitle?: ReactNode; action?: ReactNode }) {
+/** Rounded filter pills (Explore, Memories, admin tabs). */
+export function Pills<K extends string>({
+  options,
+  value,
+  onChange,
+  label,
+  className,
+}: {
+  options: readonly { key: K; label: string }[]
+  value: K
+  onChange: (key: K) => void
+  label: string
+  className?: string
+}) {
+  return (
+    <div role="group" aria-label={label} className={cx('pill-group', className)}>
+      {options.map((o) => (
+        <button
+          key={o.key}
+          type="button"
+          aria-pressed={value === o.key}
+          className={cx('pill', value === o.key && 'active')}
+          onClick={() => onChange(o.key)}
+        >
+          {o.label}
+        </button>
+      ))}
+    </div>
+  )
+}
+
+/** Two-way switch such as Solo / Together. */
+export function Segmented<K extends string>({
+  options,
+  value,
+  onChange,
+  label,
+}: {
+  options: readonly { key: K; label: string; icon?: IconName }[]
+  value: K
+  onChange: (key: K) => void
+  label: string
+}) {
+  return (
+    <div role="group" aria-label={label} className="segmented">
+      {options.map((o) => (
+        <button
+          key={o.key}
+          type="button"
+          aria-pressed={value === o.key}
+          className={cx(value === o.key && 'active')}
+          onClick={() => onChange(o.key)}
+        >
+          {o.icon && <Icon name={o.icon} size={17} />}
+          {o.label}
+        </button>
+      ))}
+    </div>
+  )
+}
+
+// ---------------------------------------------------------------- layout bits
+export function Card({
+  children,
+  className,
+  as: As = 'section',
+  id,
+}: {
+  children: ReactNode
+  className?: string
+  as?: 'section' | 'div' | 'article' | 'li'
+  id?: string
+}) {
+  return (
+    <As id={id} className={cx('lb-card', className)}>
+      {children}
+    </As>
+  )
+}
+
+export function PageHeader({
+  title,
+  subtitle,
+  action,
+  eyebrow,
+  className,
+}: {
+  title: string
+  subtitle?: ReactNode
+  action?: ReactNode
+  eyebrow?: ReactNode
+  className?: string
+}) {
   const ref = useRef<HTMLHeadingElement>(null)
   useEffect(() => {
     document.title = `${title} · Little Bloom`
   }, [title])
   return (
-    <header className="mb-5 flex flex-wrap items-end justify-between gap-3">
+    <header className={cx('page-heading flex flex-wrap items-end justify-between gap-4', className)}>
       <div className="min-w-0">
-        <h1 ref={ref} tabIndex={-1} className="text-2xl font-bold text-ink outline-none sm:text-3xl">
+        {eyebrow && <p className="eyebrow mb-3">{eyebrow}</p>}
+        <h1 ref={ref} tabIndex={-1} className="outline-none">
           {title}
         </h1>
-        {subtitle && <p className="mt-1 text-ink-soft">{subtitle}</p>}
+        {subtitle && <p>{subtitle}</p>}
       </div>
       {action}
     </header>
   )
 }
 
-export function Badge({ children, tone = 'neutral' }: { children: ReactNode; tone?: 'neutral' | 'sage' | 'peach' | 'warn' | 'danger' }) {
+export function Badge({
+  children,
+  tone = 'neutral',
+}: {
+  children: ReactNode
+  tone?: 'neutral' | 'sage' | 'peach' | 'warn' | 'danger'
+}) {
   const tones = {
     neutral: 'bg-ivory text-ink-soft border-line',
     sage: 'bg-sage-50 text-sage-700 border-sage-100',
@@ -89,7 +205,32 @@ export function Badge({ children, tone = 'neutral' }: { children: ReactNode; ton
     danger: 'bg-danger-50 text-danger border-danger-50',
   }
   return (
-    <span className={cx('inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold', tones[tone])}>
+    <span
+      className={cx(
+        'inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold',
+        tones[tone],
+      )}
+    >
+      {children}
+    </span>
+  )
+}
+
+/** Soft label with an optional icon: "Only you", "5 min", interests. */
+export function Chip({
+  children,
+  icon,
+  tone = 'sage',
+  className,
+}: {
+  children: ReactNode
+  icon?: IconName
+  tone?: 'sage' | 'peach' | 'ivory' | 'white'
+  className?: string
+}) {
+  return (
+    <span className={cx('chip', `chip-${tone}`, className)}>
+      {icon && <Icon name={icon} size={14} />}
       {children}
     </span>
   )
@@ -111,7 +252,10 @@ export function Notice({
     error: 'bg-danger-50 border-danger/30 text-danger',
   }
   return (
-    <div role={tone === 'error' ? 'alert' : 'status'} className={cx('rounded-xl border px-4 py-3 text-sm', tones[tone])}>
+    <div
+      role={tone === 'error' ? 'alert' : 'status'}
+      className={cx('rounded-2xl border px-4 py-3 text-sm', tones[tone])}
+    >
       {title && <p className="font-semibold">{title}</p>}
       {children && <div className={title ? 'mt-1' : ''}>{children}</div>}
     </div>
@@ -139,7 +283,15 @@ export function LoadingState({ label = 'Loading…' }: { label?: string }) {
   )
 }
 
-export function ErrorState({ error, onRetry, title = 'Something went wrong' }: { error: unknown; onRetry?: () => void; title?: string }) {
+export function ErrorState({
+  error,
+  onRetry,
+  title = 'Something went wrong',
+}: {
+  error: unknown
+  onRetry?: () => void
+  title?: string
+}) {
   return (
     <div className="py-6">
       <Notice tone="error" title={title}>
@@ -154,13 +306,107 @@ export function ErrorState({ error, onRetry, title = 'Something went wrong' }: {
   )
 }
 
-export function EmptyState({ title, children, action }: { title: string; children?: ReactNode; action?: ReactNode }) {
+export function EmptyState({
+  title,
+  children,
+  action,
+  art = 'keepsakes',
+}: {
+  title: string
+  children?: ReactNode
+  action?: ReactNode
+  art?: string
+}) {
   return (
-    <div className="rounded-2xl border border-dashed border-line bg-paper/60 px-5 py-10 text-center">
-      <p className="text-lg font-semibold">{title}</p>
+    <div className="empty-state text-center">
+      <Artwork name={art} className="empty-art" />
+      <p className="text-lg font-bold">{title}</p>
       {children && <div className="mx-auto mt-2 max-w-md text-ink-soft">{children}</div>}
-      {action && <div className="mt-4">{action}</div>}
+      {action && <div className="mt-5">{action}</div>}
     </div>
+  )
+}
+
+/** Settings-style row: icon tile, title, description and a chevron. */
+export function MenuRow({
+  icon,
+  title,
+  description,
+  to,
+  onClick,
+  tone = 'sage',
+  control,
+  danger,
+  external,
+}: {
+  icon: IconName
+  title: string
+  description?: string
+  to?: string
+  onClick?: () => void
+  tone?: 'sage' | 'peach' | 'danger'
+  control?: ReactNode
+  danger?: boolean
+  external?: boolean
+}) {
+  const body = (
+    <>
+      <span className={cx('menu-icon', `menu-icon-${danger ? 'danger' : tone}`)}>
+        <Icon name={icon} size={20} />
+      </span>
+      <span className="menu-text">
+        <span className={cx('menu-title', danger && 'text-danger')}>{title}</span>
+        {description && <span className="menu-desc">{description}</span>}
+      </span>
+      {control ?? (
+        <Icon name="chevron" size={18} className={cx('menu-chevron', danger && 'text-danger')} />
+      )}
+    </>
+  )
+  if (control) return <div className="menu-row">{body}</div>
+  if (to && external)
+    return (
+      <a className="menu-row" href={to} target="_blank" rel="noreferrer">
+        {body}
+      </a>
+    )
+  if (to)
+    return (
+      <Link className="menu-row" to={to}>
+        {body}
+      </Link>
+    )
+  return (
+    <button type="button" className="menu-row" onClick={onClick}>
+      {body}
+    </button>
+  )
+}
+
+export function Switch({
+  checked,
+  onChange,
+  label,
+  busy,
+}: {
+  checked: boolean
+  onChange: (on: boolean) => void
+  label: string
+  busy?: boolean
+}) {
+  return (
+    <button
+      type="button"
+      role="switch"
+      aria-checked={checked}
+      aria-label={label}
+      aria-busy={busy || undefined}
+      disabled={busy}
+      className={cx('switch', checked && 'on')}
+      onClick={() => onChange(!checked)}
+    >
+      <span className="switch-knob" />
+    </button>
   )
 }
 
@@ -188,12 +434,12 @@ export function Field({
       <label htmlFor={fieldId} className="block font-semibold">
         {label}
       </label>
+      {children({ id: fieldId, 'aria-describedby': describedBy, 'aria-invalid': error ? true : undefined })}
       {hint && (
         <p id={hintId} className="text-sm text-ink-soft">
           {hint}
         </p>
       )}
-      {children({ id: fieldId, 'aria-describedby': describedBy, 'aria-invalid': error ? true : undefined })}
       {error && (
         <p id={errId} className="text-sm font-medium text-danger">
           {error}
@@ -204,21 +450,19 @@ export function Field({
 }
 
 const inputCls =
-  'w-full rounded-xl border border-line bg-paper px-3.5 py-2.5 text-base text-ink placeholder:text-ink-soft/70 focus:border-peach-700 aria-[invalid=true]:border-danger'
+  'lb-input w-full border px-3.5 py-2.5 text-base text-ink placeholder:text-ink-soft/70 aria-[invalid=true]:border-danger'
 
-export const TextInput = forwardRef<HTMLInputElement, InputHTMLAttributes<HTMLInputElement>>(function TextInput(
-  { className, ...rest },
-  ref,
-) {
-  return <input ref={ref} className={cx(inputCls, className)} {...rest} />
-})
+export const TextInput = forwardRef<HTMLInputElement, InputHTMLAttributes<HTMLInputElement>>(
+  function TextInput({ className, ...rest }, ref) {
+    return <input ref={ref} className={cx(inputCls, className)} {...rest} />
+  },
+)
 
-export const TextArea = forwardRef<HTMLTextAreaElement, TextareaHTMLAttributes<HTMLTextAreaElement>>(function TextArea(
-  { className, ...rest },
-  ref,
-) {
-  return <textarea ref={ref} className={cx(inputCls, 'min-h-32', className)} {...rest} />
-})
+export const TextArea = forwardRef<HTMLTextAreaElement, TextareaHTMLAttributes<HTMLTextAreaElement>>(
+  function TextArea({ className, ...rest }, ref) {
+    return <textarea ref={ref} className={cx(inputCls, 'min-h-32', className)} {...rest} />
+  },
+)
 
 export function Choice({
   name,
@@ -228,6 +472,7 @@ export function Choice({
   label,
   description,
   type = 'radio',
+  art,
 }: {
   name: string
   value: string
@@ -236,26 +481,43 @@ export function Choice({
   label: string
   description?: string
   type?: 'radio' | 'checkbox'
+  art?: string
 }) {
   return (
-    <label
-      className={cx(
-        'flex cursor-pointer items-start gap-3 rounded-xl border px-4 py-3',
-        checked ? 'border-peach-700 bg-peach-50' : 'border-line bg-paper',
-      )}
-    >
+    <label className={cx('lb-choice', checked && 'checked', art && 'with-art')}>
       <input
         type={type}
         name={name}
         value={value}
         checked={checked}
         onChange={(e) => onChange(e.target.checked)}
-        className="mt-1 h-4 w-4 accent-peach-700"
       />
-      <span>
+      <span className="choice-text">
         <span className="block font-semibold">{label}</span>
         {description && <span className="block text-sm text-ink-soft">{description}</span>}
       </span>
+      {art && <Artwork name={art} className="choice-art" />}
+    </label>
+  )
+}
+
+/** Selectable interest chip (checkbox semantics). */
+export function ChoiceChip({
+  checked,
+  onChange,
+  label,
+  icon,
+}: {
+  checked: boolean
+  onChange: (on: boolean) => void
+  label: string
+  icon?: IconName
+}) {
+  return (
+    <label className={cx('choice-chip', checked && 'checked')}>
+      <input type="checkbox" className="sr-only" checked={checked} onChange={(e) => onChange(e.target.checked)} />
+      {icon && <Icon name={icon} size={16} />}
+      {label}
     </label>
   )
 }
@@ -295,7 +557,7 @@ export function ConfirmDialog({
         if (!busy) onCancel()
       }}
       aria-labelledby="confirm-title"
-      className="m-auto w-[min(92vw,30rem)] rounded-2xl border border-line bg-paper p-0 text-ink backdrop:bg-ink/40"
+      className="m-auto w-[min(92vw,30rem)] rounded-3xl border border-line bg-paper p-0 text-ink backdrop:bg-ink/40"
     >
       <div className="p-6">
         <h2 id="confirm-title" className="text-xl font-bold">
@@ -315,13 +577,19 @@ export function ConfirmDialog({
   )
 }
 
-export function Logo({ className }: { className?: string }) {
+export function Logo({ className, tone = 'dark' }: { className?: string; tone?: 'dark' | 'light' }) {
+  const light = tone === 'light'
   return (
-    <span className={cx('inline-flex items-center gap-2 font-bold text-ink', className)}>
-      <svg aria-hidden width="28" height="28" viewBox="0 0 32 32">
-        <circle cx="16" cy="16" r="15" fill="#fbe2d4" />
-        <path d="M16 24c-4-2-7-5.5-7-9a4 4 0 0 1 7-2.6A4 4 0 0 1 23 15c0 3.5-3 7-7 9z" fill="#a4532f" />
-        <path d="M16 24v4" stroke="#6f8f68" strokeWidth="2" strokeLinecap="round" />
+    <span className={cx('brand inline-flex items-center', light ? 'text-white' : 'text-ink', className)}>
+      <svg aria-hidden width="30" height="30" viewBox="0 0 32 32">
+        <path
+          d="M16 29V14M16 24C5 24 3 18 4 13c8 0 12 4 12 11ZM16 19c0-8 4-12 12-12 1 7-3 12-12 12Z"
+          stroke={light ? '#f3f6ee' : '#6f8668'}
+          strokeWidth="1.5"
+          fill={light ? '#a9bda7' : '#d7e2cc'}
+          strokeLinejoin="round"
+        />
+        <path d="M16 14C8 10 10 3 15 2c6 3 7 8 1 12Z" fill={light ? '#f0b9a3' : '#d98b70'} />
       </svg>
       Little Bloom
     </span>
