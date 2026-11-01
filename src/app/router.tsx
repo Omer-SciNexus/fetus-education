@@ -18,6 +18,7 @@ import FamilyPage from '@/features/family/FamilyPage'
 import JoinPage from '@/features/family/JoinPage'
 import SettingsPage from '@/features/privacy/SettingsPage'
 import PrivacySettingsPage from '@/features/privacy/PrivacySettingsPage'
+import PreferencesPage from '@/features/privacy/PreferencesPage'
 
 export const router = createBrowserRouter([
   {
@@ -57,6 +58,7 @@ export const router = createBrowserRouter([
               { path: '/family', element: <FamilyPage /> },
               { path: '/settings', element: <SettingsPage /> },
               { path: '/settings/privacy', element: <PrivacySettingsPage /> },
+              { path: '/settings/preferences', element: <PreferencesPage /> },
               {
                 element: <RequireRole roles={['editor', 'reviewer', 'publisher', 'operator']} />,
                 // Editorial code is loaded only for admins.

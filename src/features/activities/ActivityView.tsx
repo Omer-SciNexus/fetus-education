@@ -1,32 +1,56 @@
 import { useState, type ReactNode } from 'react'
 import { Link } from 'react-router'
-import { Badge, Card, Notice, cx } from '@/components/ui'
+import { Badge, Card, Chip, Notice, Segmented } from '@/components/ui'
+import { Artwork, categoryArt } from '@/components/Artwork'
+import { Icon } from '@/components/Icon'
 import { categoryLabels } from '@/lib/format'
 import type { PublishedItem } from '@/types/db'
 
 export function PlaceholderBanner() {
   return (
     <Notice tone="warn" title="Placeholder content — not yet clinically reviewed">
-      This text is a draft awaiting review by a qualified professional. Do not rely on it for decisions about your
-      care. Your care provider is the right person to ask.
+      This text is a draft awaiting review by a qualified professional. Do not rely on it for decisions about
+      your care. Your care provider is the right person to ask.
     </Notice>
   )
 }
 
+function kindLabel(item: PublishedItem) {
+  if (item.kind === 'story') return 'Storytime'
+  if (item.kind === 'audio') return 'Listen'
+  if (item.category === 'calm') return 'Quiet moment'
+  return 'Activity'
+}
+
+function kindVerb(item: PublishedItem) {
+  if (item.kind === 'story') return 'Read aloud'
+  if (item.kind === 'audio') return 'Listen or read'
+  return 'Solo or together'
+}
+
 export function ItemMeta({ item }: { item: PublishedItem }) {
   return (
-    <div className="flex flex-wrap items-center gap-2">
-      <Badge tone="peach">{categoryLabels[item.category] ?? item.category}</Badge>
-      <Badge>{item.version.duration_minutes} min</Badge>
-      {item.program_position && <Badge tone="sage">Program · {item.program_position} of 14</Badge>}
+    <div className="activity-meta">
+      <span>{kindVerb(item)}</span>
+      <span aria-hidden>·</span>
+      <span>About {item.version.duration_minutes} minutes</span>
+      {item.program_position && (
+        <Chip tone="sage" icon="leaf">
+          Moment {item.program_position} of 14
+        </Chip>
+      )}
+      <Chip tone="ivory">{categoryLabels[item.category] ?? item.category}</Chip>
     </div>
   )
 }
 
 function Steps({ text }: { text: string }) {
-  const steps = text.split('\n').map((s) => s.trim()).filter(Boolean)
+  const steps = text
+    .split('\n')
+    .map((s) => s.trim())
+    .filter(Boolean)
   return (
-    <ol className="list-decimal space-y-2 pl-5 marker:font-semibold marker:text-peach-700">
+    <ol className="list-decimal space-y-2.5 pl-5 text-[16px] marker:font-bold marker:text-peach-700">
       {steps.map((s, i) => (
         <li key={i}>{s}</li>
       ))}
@@ -42,10 +66,14 @@ export function ActivityView({
   item,
   showTogether,
   actions,
+  backTo = '/explore',
+  topAction,
 }: {
   item: PublishedItem
   showTogether: boolean
   actions?: ReactNode
+  backTo?: string
+  topAction?: ReactNode
 }) {
   const v = item.version
   const hasTogether = !!v.together_steps.trim()
@@ -53,11 +81,19 @@ export function ActivityView({
   const steps = mode === 'together' && hasTogether ? v.together_steps : v.solo_steps
 
   return (
-    <article className="space-y-5">
+    <article className="activity-detail space-y-5">
+      <div className="activity-topbar">
+        <Link to={backTo} className="icon-button" aria-label="Back">
+          <Icon name="back" size={22} />
+        </Link>
+        <h2>{kindLabel(item)}</h2>
+        {topAction ?? <span />}
+      </div>
+      <Artwork name={categoryArt(item.category)} className="activity-cover" eager />
       <header className="space-y-3">
+        <h1>{v.title}</h1>
         <ItemMeta item={item} />
-        <h1 className="text-3xl font-bold">{v.title}</h1>
-        {v.summary && <p className="text-lg text-ink-soft">{v.summary}</p>}
+        {v.summary && <p className="summary text-ink-soft">{v.summary}</p>}
       </header>
 
       {v.is_placeholder && <PlaceholderBanner />}
@@ -68,37 +104,28 @@ export function ActivityView({
         </Card>
       )}
 
-      {v.solo_steps.trim() && (
-        <Card>
-          <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
-            <h2 className="text-lg font-bold">How to do it</h2>
-            {hasTogether && (
-              <div role="group" aria-label="Instructions for" className="inline-flex rounded-full border border-line bg-ivory p-1">
-                {(['solo', 'together'] as const).map((m) => (
-                  <button
-                    key={m}
-                    type="button"
-                    aria-pressed={mode === m}
-                    onClick={() => setMode(m)}
-                    className={cx(
-                      'rounded-full px-4 py-1.5 text-sm font-semibold',
-                      mode === m ? 'bg-paper text-peach-700 shadow-sm' : 'text-ink-soft',
-                    )}
-                  >
-                    {m === 'solo' ? 'Solo' : 'Together'}
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
-          <Steps text={steps} />
-        </Card>
-      )}
-
       {item.kind === 'story' && v.body && (
         <Card>
           <h2 className="sr-only">Story</h2>
-          <p className="prose-lb text-lg leading-relaxed">{v.body}</p>
+          <p className="prose-lb story-copy">{v.body}</p>
+        </Card>
+      )}
+
+      {v.solo_steps.trim() && (
+        <Card className="space-y-4">
+          <h2 className="text-lg font-bold">How to do it</h2>
+          {hasTogether && (
+            <Segmented
+              label="Instructions for"
+              value={mode}
+              onChange={setMode}
+              options={[
+                { key: 'solo', label: 'Solo', icon: 'book' },
+                { key: 'together', label: 'Together', icon: 'people' },
+              ]}
+            />
+          )}
+          <Steps text={steps} />
         </Card>
       )}
 
@@ -111,8 +138,8 @@ export function ActivityView({
             </audio>
           ) : (
             <p className="text-sm text-ink-soft">
-              An audio version has not been recorded yet. You can read the script aloud, or ask someone to read it to
-              you.
+              An audio version has not been recorded yet. You can read the script aloud, or ask someone to
+              read it to you.
             </p>
           )}
           {v.transcript && (
@@ -139,7 +166,12 @@ export function ActivityView({
           <ul className="mt-2 list-disc space-y-1 pl-5 text-sm">
             {item.sources.map((s) => (
               <li key={s.id}>
-                <a className="text-peach-700 underline" href={s.url} target="_blank" rel="noreferrer noopener">
+                <a
+                  className="text-peach-700 underline"
+                  href={s.url}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                >
                   {s.title}
                 </a>{' '}
                 <span className="text-ink-soft">(accessed {s.accessed_on})</span>
@@ -152,22 +184,57 @@ export function ActivityView({
   )
 }
 
-export function ItemCard({ item, to, done, favorite, footer }: { item: PublishedItem; to: string; done?: boolean; favorite?: boolean; footer?: ReactNode }) {
+export function ItemCard({
+  item,
+  to,
+  done,
+  favorite,
+  footer,
+}: {
+  item: PublishedItem
+  to: string
+  done?: boolean
+  favorite?: boolean
+  footer?: ReactNode
+}) {
   return (
-    <Card as="li" className="flex flex-col gap-2">
-      <div className="flex flex-wrap items-center gap-2">
-        <ItemMeta item={item} />
-        {done && <Badge tone="sage">✓ Done</Badge>}
-        {favorite && <Badge tone="peach">♥ Favourite</Badge>}
-        {item.version.is_placeholder && <Badge tone="warn">Placeholder</Badge>}
+    <Card as="li" className="activity-card">
+      <Link to={to} className="activity-card-cover" aria-hidden="true" tabIndex={-1}>
+        <Artwork name={categoryArt(item.category)} />
+        {done && (
+          <Chip tone="white" icon="check">
+            Done
+          </Chip>
+        )}
+      </Link>
+      <div className="activity-card-body">
+        <div className="activity-card-title">
+          <h3>
+            <Link to={to}>{item.version.title}</Link>
+          </h3>
+          <span className={`fav ${favorite ? 'on' : ''}`} aria-label={favorite ? 'Saved' : undefined} title={favorite ? 'Saved' : undefined}>
+            <Icon name="bookmark" size={22} />
+          </span>
+        </div>
+        {item.version.summary && <p>{item.version.summary}</p>}
+        {item.version.is_placeholder && (
+          <div>
+            <Badge tone="warn">Placeholder</Badge>
+          </div>
+        )}
+        <div className="activity-card-meta">
+          <span>
+            <Icon name="clock" size={16} />
+            {item.version.duration_minutes} min
+          </span>
+          {item.program_position ? (
+            <Chip tone="ivory">Moment {item.program_position} of 14</Chip>
+          ) : (
+            <span className="text-ink-soft">{categoryLabels[item.category] ?? item.category}</span>
+          )}
+        </div>
+        {footer}
       </div>
-      <h3 className="text-lg font-bold">
-        <Link to={to} className="hover:text-peach-700 hover:underline">
-          {item.version.title}
-        </Link>
-      </h3>
-      {item.version.summary && <p className="text-ink-soft">{item.version.summary}</p>}
-      {footer}
     </Card>
   )
 }

@@ -1,17 +1,22 @@
 import { useMemo, useState } from 'react'
-import { useSearchParams } from 'react-router'
+import { Link, useSearchParams } from 'react-router'
 import { useFavorites, useProgress, usePublished } from '@/lib/queries'
-import { Button, EmptyState, ErrorState, LoadingState, PageHeader, TextInput, cx } from '@/components/ui'
+import { ButtonLink, Card, EmptyState, ErrorState, LoadingState, PageHeader, Pills, TextInput } from '@/components/ui'
+import { Artwork, categoryArt } from '@/components/Artwork'
+import { Icon } from '@/components/Icon'
 import { ItemCard } from './ActivityView'
 import type { PublishedItem } from '@/types/db'
+import { DevelopmentJourney } from '@/features/development/DevelopmentJourney'
+import { useMember } from '@/lib/auth'
 
 const filters = [
-  { key: 'program', label: 'Program' },
-  { key: 'stories', label: 'Stories' },
-  { key: 'calm', label: 'Calm' },
-  { key: 'learn', label: 'Learn' },
-  { key: 'favorites', label: 'Favourites' },
   { key: 'all', label: 'All' },
+  { key: 'program', label: 'The program' },
+  { key: 'stories', label: 'Stories' },
+  { key: 'calm', label: 'Quiet moments' },
+  { key: 'together', label: 'Together' },
+  { key: 'learn', label: 'Learn' },
+  { key: 'favorites', label: 'Saved' },
 ] as const
 type FilterKey = (typeof filters)[number]['key']
 
@@ -19,9 +24,59 @@ function hrefFor(i: PublishedItem) {
   return i.kind === 'education' ? `/learn/${i.slug}` : `/activities/${i.slug}`
 }
 
+function ProgramList({
+  items,
+  completed,
+}: {
+  items: PublishedItem[]
+  completed: ReadonlySet<string>
+}) {
+  const next = items.find((i) => !completed.has(i.id))
+  return (
+    <div className="program-layout">
+      <ol className="program-list">
+        {items.map((i) => {
+          const done = completed.has(i.id)
+          return (
+            <li key={i.id}>
+              <Link to={hrefFor(i)} className={`program-row ${done ? 'done' : ''}`}>
+                <span className="program-number" aria-hidden>
+                  {i.program_position}
+                </span>
+                <Artwork name={categoryArt(i.category)} />
+                <span>
+                  <h3>{i.version.title}</h3>
+                  <p>
+                    {i.version.duration_minutes} min{done ? ' · Explored' : ''}
+                  </p>
+                </span>
+                <span className="program-state" aria-label={done ? 'Explored' : 'Not yet explored'}>
+                  <Icon name={done ? 'check' : 'arrow'} size={18} />
+                </span>
+              </Link>
+            </li>
+          )
+        })}
+      </ol>
+      <Card className="program-side">
+        <Artwork name="solo-reading" />
+        <div>
+          <h2>Continue your journey</h2>
+          <Icon name="leaf" size={26} className="leaf" />
+          <p>Take time for what feels good today. Every moment matters.</p>
+          <ButtonLink to={next ? hrefFor(next) : '/explore'}>
+            {next ? 'Choose an activity' : 'Explore everything'} <Icon name="arrow" size={17} />
+          </ButtonLink>
+        </div>
+      </Card>
+    </div>
+  )
+}
+
 export default function ExplorePage() {
+  const { ctx } = useMember()
   const [params, setParams] = useSearchParams()
-  const filter = (filters.find((f) => f.key === params.get('f'))?.key ?? 'program') as FilterKey
+  const filter = (filters.find((f) => f.key === params.get('f'))?.key ?? 'all') as FilterKey
   const [q, setQ] = useState('')
   const published = usePublished()
   const progress = useProgress()
@@ -38,6 +93,8 @@ export default function ExplorePage() {
           return i.kind === 'story'
         case 'calm':
           return i.kind === 'audio' || (i.kind === 'activity' && i.category === 'calm')
+        case 'together':
+          return !!i.version.together_steps.trim()
         case 'learn':
           return i.kind === 'education'
         case 'favorites':
@@ -46,51 +103,86 @@ export default function ExplorePage() {
           return true
       }
     })
+    const sorted =
+      filter === 'program'
+        ? [...byFilter].sort((a, b) => (a.program_position ?? 0) - (b.program_position ?? 0))
+        : byFilter
     const needle = q.trim().toLowerCase()
     return needle
-      ? byFilter.filter((i) => `${i.version.title} ${i.version.summary}`.toLowerCase().includes(needle))
-      : byFilter
+      ? sorted.filter((i) => `${i.version.title} ${i.version.summary}`.toLowerCase().includes(needle))
+      : sorted
   }, [published.data, favorites.data, filter, q])
 
+  const programCount = (published.data ?? []).filter((i) => i.program_position !== null).length
+  const isProgram = filter === 'program' && !q.trim()
+  const completed = progress.data ?? new Map<string, string>()
+
   return (
-    <div className="space-y-5">
-      <PageHeader title="Explore" subtitle="Activities, stories, calm scripts and short learning cards." />
+    <div>
+      <PageHeader
+        title={isProgram ? `${programCount || 14} little moments of connection` : 'Find your next little moment'}
+        subtitle={
+          isProgram
+            ? 'Explore at your own pace. Repeat what you enjoy.'
+            : 'A story to share, a moment to pause, something new to discover.'
+        }
+        action={
+          <div className="library-search">
+            <Icon name="search" size={18} />
+            <label htmlFor="search" className="sr-only">
+              Search activities
+            </label>
+            <TextInput
+              id="search"
+              type="search"
+              placeholder="Search activities"
+              value={q}
+              onChange={(e) => setQ(e.target.value)}
+            />
+          </div>
+        }
+      />
 
-      <div className="flex flex-wrap gap-2" role="group" aria-label="Filter">
-        {filters.map((f) => (
-          <Button
-            key={f.key}
-            variant={filter === f.key ? 'primary' : 'secondary'}
-            aria-pressed={filter === f.key}
-            className="min-h-9 px-4 py-1.5 text-sm"
-            onClick={() => setParams(f.key === 'program' ? {} : { f: f.key }, { replace: true })}
-          >
-            {f.label}
-          </Button>
-        ))}
+      {!ctx.profile.content_paused && (
+        <div className="mb-7">
+          <DevelopmentJourney />
+        </div>
+      )}
+      <div className="library-toolbar">
+        <Pills
+          label="Filter"
+          options={filters}
+          value={filter}
+          onChange={(key) => setParams(key === 'all' ? {} : { f: key }, { replace: true })}
+        />
       </div>
-
-      <div>
-        <label htmlFor="search" className="sr-only">Search</label>
-        <TextInput id="search" type="search" placeholder="Search titles" value={q} onChange={(e) => setQ(e.target.value)} />
-      </div>
-
       {published.isPending ? (
         <LoadingState />
       ) : published.isError ? (
         <ErrorState error={published.error} onRetry={() => void published.refetch()} />
       ) : list.length === 0 ? (
-        <EmptyState title={q ? 'Nothing matches your search.' : filter === 'favorites' ? 'No favourites yet.' : 'Nothing here yet.'}>
-          {filter === 'favorites' && 'Tap the heart on any activity to keep it here.'}
+        <EmptyState
+          art="story-garden"
+          title={
+            q
+              ? 'Nothing matches your search.'
+              : filter === 'favorites'
+                ? 'Nothing saved yet.'
+                : 'Nothing here yet.'
+          }
+        >
+          {filter === 'favorites' && 'Tap the bookmark on any activity to keep it here.'}
         </EmptyState>
+      ) : isProgram ? (
+        <ProgramList items={list} completed={new Set(completed.keys())} />
       ) : (
-        <ul className={cx('grid gap-4 sm:grid-cols-2')}>
+        <ul className="library-grid">
           {list.map((i) => (
             <ItemCard
               key={i.id}
               item={i}
               to={hrefFor(i)}
-              done={progress.data?.has(i.id)}
+              done={completed.has(i.id)}
               favorite={favorites.data?.has(i.id)}
             />
           ))}

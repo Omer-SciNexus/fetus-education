@@ -4,7 +4,19 @@ import { useSamples } from '@/lib/queries'
 import { guest } from '@/lib/guest'
 import { stageLabels } from '@/lib/stage'
 import { ActivityView, ItemCard } from '@/features/activities/ActivityView'
-import { Button, ButtonLink, Card, EmptyState, ErrorState, LoadingState, Notice, PageHeader } from '@/components/ui'
+import {
+  Button,
+  ButtonLink,
+  Card,
+  EmptyState,
+  ErrorState,
+  LoadingState,
+  Notice,
+  PageHeader,
+  Pills,
+} from '@/components/ui'
+import { Artwork } from '@/components/Artwork'
+import { Icon } from '@/components/Icon'
 import type { Stage } from '@/types/db'
 
 function GuestNotice() {
@@ -15,6 +27,13 @@ function GuestNotice() {
     </Notice>
   )
 }
+
+const stageOptions = [
+  { key: 'first', label: stageLabels.first },
+  { key: 'second', label: stageLabels.second },
+  { key: 'third', label: stageLabels.third },
+  { key: 'skip', label: 'Skip' },
+] as const
 
 export default function SamplePage() {
   const samples = useSamples()
@@ -27,23 +46,29 @@ export default function SamplePage() {
   }
 
   return (
-    <div className="space-y-6 py-4">
-      <PageHeader title="Try an activity" subtitle="Three sample activities from the 14-activity program." />
+    <div className="space-y-6 py-6">
+      <div className="sample-intro">
+        <div>
+          <PageHeader
+            title="Try a few activities"
+            subtitle="A small beginning. Explore three free samples from the 14-activity program, no account needed."
+          />
+        </div>
+        <Artwork name="family-reading" eager />
+      </div>
       <GuestNotice />
 
-      <Card>
-        <h2 className="font-bold">Stage (optional)</h2>
-        <p className="text-sm text-ink-soft">Only used to label content. You can skip this.</p>
-        <div className="mt-3 flex flex-wrap gap-2" role="group" aria-label="Pregnancy stage">
-          {(['first', 'second', 'third'] as Stage[]).map((s) => (
-            <Button key={s} variant={stage === s ? 'primary' : 'secondary'} aria-pressed={stage === s} onClick={() => choose(s)}>
-              {stageLabels[s]}
-            </Button>
-          ))}
-          <Button variant={stage === null ? 'primary' : 'secondary'} aria-pressed={stage === null} onClick={() => choose(null)}>
-            Skip
-          </Button>
+      <Card className="stage-picker space-y-3">
+        <div>
+          <h2 className="font-bold">Stage (optional)</h2>
+          <p className="text-sm text-ink-soft">Only used to label content. You can skip this.</p>
         </div>
+        <Pills
+          label="Pregnancy stage"
+          options={stageOptions}
+          value={stage ?? 'skip'}
+          onChange={(key) => choose(key === 'skip' ? null : key)}
+        />
       </Card>
 
       {samples.isPending ? (
@@ -55,7 +80,7 @@ export default function SamplePage() {
           const activities = samples.data.filter((i) => i.kind === 'activity')
           if (!activities.length) return <EmptyState title="No samples are available right now." />
           return (
-            <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            <ul className="library-grid">
               {activities.map((i) => (
                 <ItemCard key={i.id} item={i} to={`/sample/${i.slug}`} done={completed.has(i.slug)} />
               ))}
@@ -78,7 +103,10 @@ export function SampleActivityPage() {
   if (!item) {
     return (
       <div className="py-8">
-        <EmptyState title="This sample is not available." action={<ButtonLink to="/sample">See samples</ButtonLink>} />
+        <EmptyState
+          title="This sample is not available."
+          action={<ButtonLink to="/sample">See samples</ButtonLink>}
+        />
       </div>
     )
   }
@@ -90,6 +118,7 @@ export function SampleActivityPage() {
       <ActivityView
         item={item}
         showTogether={false}
+        backTo="/sample"
         actions={
           done ? (
             <Card className="bg-peach-50">
@@ -99,7 +128,9 @@ export function SampleActivityPage() {
               </p>
               <div className="mt-4 flex flex-wrap gap-3">
                 {others[0] && <ButtonLink to={`/sample/${others[0].slug}`}>Try another sample</ButtonLink>}
-                <ButtonLink to="/sign-in" variant="secondary">Sign in to save</ButtonLink>
+                <ButtonLink to="/sign-in" variant="secondary">
+                  Sign in to save
+                </ButtonLink>
                 <Button
                   variant="ghost"
                   onClick={() => {
@@ -112,15 +143,18 @@ export function SampleActivityPage() {
               </div>
             </Card>
           ) : (
-            <Button
-              full
-              onClick={() => {
-                guest.complete(slug)
-                setDone(true)
-              }}
-            >
-              Mark as done
-            </Button>
+            <div className="activity-actions">
+              <Button
+                full
+                onClick={() => {
+                  guest.complete(slug)
+                  setDone(true)
+                }}
+              >
+                <Icon name="heart" size={18} />
+                Mark as done
+              </Button>
+            </div>
           )
         }
       />

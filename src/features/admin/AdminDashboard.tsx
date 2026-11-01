@@ -6,6 +6,7 @@ import * as api from '@/lib/api'
 import { errorMessage } from '@/lib/errors'
 import { formatBytes, formatDateTime } from '@/lib/format'
 import { Badge, Button, Card, ErrorState, Field, LoadingState, Notice, PageHeader, TextInput, cx } from '@/components/ui'
+import { Icon } from '@/components/Icon'
 import type { ContentVersion } from '@/types/db'
 
 type Tab = 'content' | 'pilot' | 'access' | 'rights' | 'ops'
@@ -69,8 +70,27 @@ function ContentTab() {
     }
   }
 
+  const drafts = items.data.filter((i) => latest(i.versions)?.status === 'draft').length
+  const inReview = items.data.filter((i) => ['in_review', 'changes_requested', 'approved'].includes(latest(i.versions)?.status)).length
+  const publishedCount = items.data.filter((i) => !!i.published_version_id).length
+  const publishedReviewed = publishedCount - publishedUnreviewed.length
+
   return (
     <div className="space-y-5">
+      <div className="stat-tiles">
+        <div className="stat-tile blush">
+          <span className="icon-tile"><Icon name="pen" size={22} /></span>
+          <div><strong>{drafts}</strong><span>drafts</span></div>
+        </div>
+        <div className="stat-tile sage">
+          <span className="icon-tile"><Icon name="clock" size={22} /></span>
+          <div><strong>{inReview}</strong><span>in review</span></div>
+        </div>
+        <div className="stat-tile sand">
+          <span className="icon-tile"><Icon name="check" size={22} /></span>
+          <div><strong>{publishedCount}</strong><span>published</span></div>
+        </div>
+      </div>
       {(publishedUnreviewed.length > 0 || placeholders.length > 0) && (
         <Notice tone="warn" title="Release blockers (section 23)">
           {publishedUnreviewed.length > 0 && <p>{publishedUnreviewed.length} published item(s) have no recorded editorial approval.</p>}
@@ -78,6 +98,8 @@ function ContentTab() {
         </Notice>
       )}
 
+      <div className="admin-grid">
+      <div className="space-y-5">
       <Card>
         <h2 className="text-lg font-bold">Review queue</h2>
         {queue.length === 0 ? (
@@ -152,6 +174,30 @@ function ContentTab() {
           </form>
         </Card>
       )}
+      </div>
+      <Card>
+        <h2 className="text-lg font-bold">Before publishing</h2>
+        <ul className="checklist">
+          <li>
+            <span className="check-circle"><Icon name="check" size={18} /></span>
+            <div><strong>Sources added</strong><span>Cite the references used for health-related text.</span></div>
+          </li>
+          <li>
+            <span className="check-circle"><Icon name="check" size={18} /></span>
+            <div><strong>Rights checked</strong><span>Images, audio and text cleared in the rights register.</span></div>
+          </li>
+          <li>
+            <span className="check-circle"><Icon name="check" size={18} /></span>
+            <div>
+              <strong>Review recorded</strong>
+              <span>
+                Editorial approval logged. {publishedReviewed} of {publishedCount} published items have one.
+              </span>
+            </div>
+          </li>
+        </ul>
+      </Card>
+      </div>
     </div>
   )
 }
@@ -382,15 +428,19 @@ export default function AdminDashboard() {
 
   return (
     <div className="space-y-5">
-      <PageHeader title="Admin" subtitle="Editorial workflow and pilot operations. No access to family memories." />
-      <div role="tablist" className="flex flex-wrap gap-2">
+      <PageHeader
+        eyebrow="Content studio"
+        title="Ready for a thoughtful review"
+        subtitle="Create and refine content that supports informed, confident and connected parents. Editors never see family memories."
+      />
+      <div role="tablist" className="pill-group">
         {visible.map((t) => (
           <button
             key={t.key}
             role="tab"
             aria-selected={tab === t.key}
             onClick={() => setParams({ tab: t.key }, { replace: true })}
-            className={cx('rounded-full px-4 py-2 text-sm font-semibold', tab === t.key ? 'bg-peach-700 text-white' : 'bg-paper text-ink-soft border border-line')}
+            className={cx('pill', tab === t.key && 'active')}
           >
             {t.label}
           </button>

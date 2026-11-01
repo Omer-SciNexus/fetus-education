@@ -5,7 +5,8 @@ import { logEvent } from '@/lib/api'
 import { useCompletion, useFavorites, useItem, useProgress, useToggleFavorite } from '@/lib/queries'
 import { errorMessage } from '@/lib/errors'
 import { formatDate } from '@/lib/format'
-import { Button, ButtonLink, Card, EmptyState, ErrorState, LoadingState, Notice } from '@/components/ui'
+import { Button, ButtonLink, EmptyState, ErrorState, IconButton, LoadingState, Notice } from '@/components/ui'
+import { Icon } from '@/components/Icon'
 import { ActivityView } from './ActivityView'
 
 export default function ActivityPage() {
@@ -43,43 +44,43 @@ export default function ActivityPage() {
   const together = ctx.profile.preferences.use_mode === 'shared'
 
   return (
-    <div className="mx-auto max-w-2xl">
-      <ActivityView
-        item={it}
-        showTogether={together}
-        actions={
-          <Card className="space-y-4">
-            {completedAt ? (
-              <Notice tone="success" title="Done">
-                You completed this on {formatDate(completedAt)}. You can repeat it any time.
-              </Notice>
-            ) : null}
-            {completion.isError && <Notice tone="error">{errorMessage(completion.error)}</Notice>}
-            <div className="flex flex-wrap gap-3">
-              {completedAt ? (
-                <Button variant="secondary" loading={completion.isPending} onClick={() => completion.mutate({ itemId: it.id, done: false })}>
-                  Mark as not done
-                </Button>
-              ) : (
-                <Button loading={completion.isPending} onClick={() => completion.mutate({ itemId: it.id, done: true })}>
-                  Mark as done
-                </Button>
-              )}
-              <ButtonLink to={`/memories/new?activity=${encodeURIComponent(it.slug)}`} variant="secondary">
-                Save a memory
-              </ButtonLink>
-              <Button
-                variant="ghost"
-                aria-pressed={isFav}
-                loading={fav.isPending}
-                onClick={() => fav.mutate({ itemId: it.id, on: !isFav })}
-              >
-                {isFav ? '♥ Favourite' : '♡ Add to favourites'}
-              </Button>
-            </div>
-          </Card>
-        }
-      />
-    </div>
+    <ActivityView
+      item={it}
+      showTogether={together}
+      topAction={
+        <IconButton
+          icon="bookmark"
+          label={isFav ? 'Saved — remove from saved' : 'Save for later'}
+          aria-pressed={isFav}
+          disabled={fav.isPending}
+          onClick={() => fav.mutate({ itemId: it.id, on: !isFav })}
+        />
+      }
+      actions={
+        <div className="activity-actions">
+          {completedAt ? (
+            <Notice tone="success" title="Done">
+              You completed this on {formatDate(completedAt)}. You can repeat it any time.
+            </Notice>
+          ) : null}
+          {completion.isError && <Notice tone="error">{errorMessage(completion.error)}</Notice>}
+          {fav.isError && <Notice tone="error">{errorMessage(fav.error)}</Notice>}
+          {completedAt ? (
+            <Button variant="secondary" full loading={completion.isPending} onClick={() => completion.mutate({ itemId: it.id, done: false })}>
+              Mark as not done
+            </Button>
+          ) : (
+            <Button full loading={completion.isPending} onClick={() => completion.mutate({ itemId: it.id, done: true })}>
+              <Icon name="heart" size={18} />
+              Mark as done
+            </Button>
+          )}
+          <ButtonLink to={`/memories/new?activity=${encodeURIComponent(it.slug)}`} variant="secondary" full>
+            <Icon name="bookmark" size={18} />
+            Save a memory
+          </ButtonLink>
+        </div>
+      }
+    />
   )
 }

@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router'
+import { Link, useNavigate } from 'react-router'
+import { Icon } from '@/components/Icon'
 import { useQuery } from '@tanstack/react-query'
 import { useAuth, useMember } from '@/lib/auth'
 import { exportMyData, listMyRecordings, requestAccountDeletion } from '@/lib/api'
@@ -66,7 +67,8 @@ export default function PrivacySettingsPage() {
 
   return (
     <div className="space-y-5">
-      <PageHeader title="Privacy" subtitle="Your data, your choices." />
+      <Link to="/settings" className="text-link"><Icon name="back" size={16} /> Your space</Link>
+      <PageHeader title="Your data" subtitle="Export what you have captured, or delete your account." />
       {error && <Notice tone="error">{error}</Notice>}
 
       <Card className="space-y-2">
@@ -102,7 +104,7 @@ export default function PrivacySettingsPage() {
         )}
       </Card>
 
-      <Card className="space-y-3 border-danger/30">
+      <Card id="delete" className="space-y-3 border-danger/30">
         <h2 className="text-lg font-bold text-danger">Delete your account</h2>
         <p className="text-ink-soft">Please export anything you want to keep first.</p>
         <Button variant="danger" onClick={() => setConfirm(true)}>Delete my account…</Button>
