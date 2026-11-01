@@ -29,6 +29,11 @@ export async function devSignIn(page: Page, email: string, password = 'test-pass
 export async function completeOnboarding(page: Page, name: string) {
   await expect(page.getByRole('heading', { level: 1 })).toContainText('Welcome')
   await page.getByLabel('What should we call you?').fill(name)
+  await page.getByRole('button', { name: 'Continue' }).click()
+  await expect(page.getByRole('heading', { level: 1 })).not.toContainText('Welcome')
+  // Owners get an optional pregnancy-stage step; partners go straight to the agreement.
+  const skip = page.getByRole('button', { name: 'Skip for now' })
+  if (await skip.count()) await skip.click()
   await page.getByText('I have read the privacy notice and pilot terms').click()
   await page.getByRole('button', { name: 'Continue' }).click()
   await page.waitForURL((url) => !url.pathname.startsWith('/onboarding'))

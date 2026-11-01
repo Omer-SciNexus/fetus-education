@@ -19,6 +19,25 @@ test('guest completes a sample without an account or microphone prompt', async (
   await expect(page.getByRole('link', { name: 'Sign in to save' })).toBeVisible()
 })
 
+test('home development journey replaces the garden and respects reduced motion', async ({ page }) => {
+  await page.goto('/')
+  const journey = page.locator('.development-journey')
+  // The film sits below the hero and only loads once scrolled into view.
+  await journey.scrollIntoViewIfNeeded()
+  await expect(journey.locator('video')).toBeVisible({ timeout: 20_000 })
+  await expect(page.getByText('A little life. A world of hope.')).toBeVisible()
+  await expect(page.locator('.hero-garden')).toHaveCount(0)
+
+  await page.emulateMedia({ reducedMotion: 'reduce' })
+  await page.reload()
+  await journey.scrollIntoViewIfNeeded()
+  await expect(journey.locator('img')).toBeVisible()
+  await expect(journey.locator('video')).toBeHidden()
+  // Reduced motion must not request the film or a 3D renderer.
+  const scripts = await page.evaluate(() => performance.getEntriesByType('resource').map((s) => s.name))
+  expect(scripts.some((src) => /three|bonding-43s\.mp4/i.test(src))).toBe(false)
+})
+
 test('member routes redirect guests to sign-in', async ({ page }) => {
   await page.goto('/memories')
   await expect(page).toHaveURL(/\/sign-in$/)
