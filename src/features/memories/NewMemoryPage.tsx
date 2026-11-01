@@ -34,7 +34,8 @@ export default function NewMemoryPage() {
   const qc = useQueryClient()
 
   const [kind, setKind] = useState<'text' | 'voice'>(params.get('kind') === 'voice' ? 'voice' : 'text')
-  const [title, setTitle] = useState('')
+  // Toolkit pages can suggest a title and a prompt (plain text, shown as text only).
+  const [title, setTitle] = useState((params.get('title') ?? '').slice(0, 120))
   const [body, setBody] = useState('')
   const [visibility, setVisibility] = useState<Visibility>('private')
   const [busy, setBusy] = useState(false)
@@ -43,7 +44,7 @@ export default function NewMemoryPage() {
 
   const activityId = activitySlug ? (activity.data?.id ?? null) : null
   const hasPartner = (family.data?.members.length ?? 0) > 1
-  const prompt = activity.data?.version.reflection_prompt
+  const prompt = activity.data?.version.reflection_prompt || (params.get('prompt') ?? '').slice(0, 200)
 
   // Free quota held by uploads interrupted on a previous visit.
   useEffect(() => {

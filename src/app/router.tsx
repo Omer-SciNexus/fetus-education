@@ -14,6 +14,11 @@ import LearnPage from '@/features/education/LearnPage'
 import MemoriesPage from '@/features/memories/MemoriesPage'
 import NewMemoryPage from '@/features/memories/NewMemoryPage'
 import MemoryDetailPage from '@/features/memories/MemoryDetailPage'
+import KeepsakeBookPage from '@/features/memories/KeepsakeBookPage'
+import WeeksPage from '@/features/toolkit/WeeksPage'
+import TalkPage from '@/features/toolkit/TalkPage'
+import BreathePage from '@/features/toolkit/BreathePage'
+import PlanPage from '@/features/toolkit/PlanPage'
 import FamilyPage from '@/features/family/FamilyPage'
 import JoinPage from '@/features/family/JoinPage'
 import SettingsPage from '@/features/privacy/SettingsPage'
@@ -54,7 +59,12 @@ export const router = createBrowserRouter([
               { path: '/learn/:slug', element: <LearnPage /> },
               { path: '/memories', element: <MemoriesPage /> },
               { path: '/memories/new', element: <NewMemoryPage /> },
+              { path: '/memories/book', element: <KeepsakeBookPage /> },
               { path: '/memories/:id', element: <MemoryDetailPage /> },
+              { path: '/weeks', element: <WeeksPage /> },
+              { path: '/talk', element: <TalkPage /> },
+              { path: '/breathe', element: <BreathePage /> },
+              { path: '/plan', element: <PlanPage /> },
               { path: '/family', element: <FamilyPage /> },
               { path: '/settings', element: <SettingsPage /> },
               { path: '/settings/privacy', element: <PrivacySettingsPage /> },

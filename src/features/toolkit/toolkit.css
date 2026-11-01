@@ -1,0 +1,415 @@
+/* Toolkit: week by week, little conversations, breathe, family plan, keepsake book. */
+
+/* ------------------------------------------------------------ week strip (Today) */
+.week-strip {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 18px;
+  border-radius: 22px;
+  border: 1px solid #f3dfd2;
+  background: #f8e9df;
+  color: var(--color-ink);
+  transition: box-shadow 0.2s;
+}
+.week-strip:hover {
+  box-shadow: 0 10px 24px #293d2e12;
+}
+.week-strip-num,
+.week-num {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--color-paper);
+  color: var(--color-peach-700);
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 700;
+}
+.week-strip-text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  flex: 1;
+}
+.week-strip-text strong {
+  font-size: 16px;
+}
+.week-strip-text span {
+  font-size: 14px;
+  color: #6b5a4d;
+}
+.week-strip .arrow-circle {
+  flex: none;
+}
+
+/* ------------------------------------------------------------ shared */
+.toolkit-note {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  font-size: 14px;
+  color: var(--color-ink-soft);
+}
+.toolkit-note svg {
+  flex: none;
+  margin-top: 3px;
+}
+
+/* ------------------------------------------------------------ week by week */
+.week-countdown {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  font-weight: 600;
+  color: var(--color-sage-700);
+}
+.week-card {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.week-card-head {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+.week-card-head h2 {
+  font-size: 24px;
+  margin: 4px 0;
+}
+.week-num {
+  width: 64px;
+  height: 64px;
+  font-size: 28px;
+  background: #f8e9df;
+}
+.week-highlight {
+  font-size: 17px;
+  line-height: 1.6;
+}
+.week-idea {
+  display: flex;
+  gap: 12px;
+  padding: 14px 16px;
+  border-radius: 18px;
+  background: var(--color-sage-50);
+  color: var(--color-sage-700);
+}
+.week-idea svg {
+  flex: none;
+  margin-top: 3px;
+}
+.week-idea h3 {
+  font-size: 15px;
+}
+.week-idea p {
+  color: var(--color-ink);
+}
+.week-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.week-nav .icon-button:disabled {
+  opacity: 0.35;
+}
+
+/* ------------------------------------------------------------ little conversations */
+.talk-today {
+  display: grid;
+  grid-template-columns: 180px minmax(0, 1fr);
+  gap: 20px;
+  align-items: center;
+  background: #f5ede2;
+  border-color: #efe3d3;
+}
+.talk-today img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 18px;
+}
+.talk-today h2 {
+  font-size: 22px;
+  margin: 6px 0 16px;
+}
+.prompt-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 8px;
+}
+.prompt-list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 10px 10px 16px;
+  border-radius: 16px;
+  border: 1px solid var(--color-line);
+  background: var(--color-paper);
+}
+.lullaby-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+}
+.lullaby h3 {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  font-size: 17px;
+}
+.lullaby-lines {
+  display: flex;
+  flex-direction: column;
+  margin: 12px 0;
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+/* ------------------------------------------------------------ breathe */
+.breathe-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding-block: 36px;
+  text-align: center;
+}
+.breathe-orb {
+  width: 170px;
+  height: 170px;
+  margin-bottom: 18px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 35%, #fbe3d6, #e9b9a3 60%, #d99a80);
+  box-shadow: 0 0 0 18px #f8e9df;
+  transform: scale(0.72);
+  transition: transform 1s ease;
+}
+.breathe-orb.is-in {
+  transform: scale(1);
+  transition: transform var(--in) ease-in-out;
+}
+.breathe-orb.is-out {
+  transform: scale(0.72);
+  transition: transform var(--out) ease-in-out;
+}
+.breathe-label {
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 700;
+}
+.breathe-count {
+  font-size: 18px;
+  color: var(--color-peach-700);
+  font-variant-numeric: tabular-nums;
+}
+.breathe-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+  align-items: center;
+  margin-top: 8px;
+}
+
+/* ------------------------------------------------------------ family plan */
+.plan-share {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  font-weight: 600;
+}
+.plan-share input,
+.plan-check {
+  width: 20px;
+  height: 20px;
+  margin-top: 3px;
+  flex: none;
+  accent-color: var(--color-sage-600);
+}
+.plan-share small {
+  display: block;
+  font-weight: 400;
+  font-size: 14px;
+  color: var(--color-ink-soft);
+}
+.plan-ideas {
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid var(--color-line);
+}
+.plan-ideas .chip-row {
+  margin-top: 10px;
+}
+.plan-list {
+  display: grid;
+  gap: 8px;
+}
+.plan-list li {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 14px;
+  border-radius: 18px;
+  border: 1px solid var(--color-line);
+  background: var(--color-paper);
+}
+.plan-list li.done .plan-label > span:first-child {
+  text-decoration: line-through;
+  color: var(--color-ink-soft);
+}
+.plan-label {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  overflow-wrap: anywhere;
+}
+.plan-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+.plan-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: none;
+}
+.heart-button {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  flex: none;
+  border-radius: 50%;
+  border: 1px solid var(--color-line);
+  color: var(--color-ink-soft);
+}
+.heart-button.on {
+  background: var(--color-peach-50);
+  border-color: var(--color-peach-200);
+  color: var(--color-peach-700);
+}
+.heart-button.on svg {
+  fill: currentColor;
+}
+
+/* ------------------------------------------------------------ keepsake book */
+.keepsake-book {
+  max-width: 720px;
+  margin-inline: auto;
+  padding: 40px 36px;
+  border-radius: 28px;
+  border: 1px solid var(--color-line);
+  background: var(--color-paper);
+}
+.keepsake-cover {
+  text-align: center;
+  padding-bottom: 28px;
+  margin-bottom: 28px;
+  border-bottom: 1px solid var(--color-line);
+}
+.keepsake-cover h2 {
+  font-size: 34px;
+  margin: 8px 0;
+}
+.keepsake-cover p:last-child {
+  color: var(--color-ink-soft);
+}
+.keepsake-entries {
+  display: grid;
+  gap: 28px;
+}
+.keepsake-entries li {
+  break-inside: avoid;
+}
+.keepsake-date {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-peach-700);
+}
+.keepsake-entries h3 {
+  font-size: 20px;
+  margin: 2px 0 6px;
+}
+.keepsake-body {
+  white-space: pre-wrap;
+  line-height: 1.7;
+}
+.keepsake-voice {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  margin-top: 6px;
+  font-size: 14px;
+  color: var(--color-ink-soft);
+}
+
+/* ------------------------------------------------------------ Today additions */
+.today-talk .eyebrow {
+  color: #6b5a4d;
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  text-transform: none;
+}
+.today-talk h2 {
+  font-size: 20px;
+  margin: 8px 0 14px;
+  line-height: 1.3;
+}
+.today-talk .lb-button {
+  align-self: start;
+}
+
+@media (max-width: 640px) {
+  .talk-today {
+    grid-template-columns: 1fr;
+  }
+  .keepsake-book {
+    padding: 28px 20px;
+  }
+  .plan-list li {
+    flex-wrap: wrap;
+  }
+  .plan-actions {
+    margin-left: auto;
+  }
+}
+
+/* The keepsake book prints on its own, without the app around it. */
+@media print {
+  .app-sidebar,
+  .mobile-header,
+  .mobile-nav,
+  .no-print,
+  .app-main > .mb-6 {
+    display: none !important;
+  }
+  .app-shell,
+  .app-workspace,
+  .app-main {
+    display: block !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    max-width: none !important;
+  }
+  body,
+  html {
+    background: #fff !important;
+  }
+  .keepsake-book {
+    border: 0;
+    padding: 0;
+    max-width: none;
+  }
+}
