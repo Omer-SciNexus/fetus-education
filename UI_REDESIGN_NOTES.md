@@ -110,7 +110,8 @@ for each screen. What changed in this pass:
   bar with home, compass, image and user icons. The top bar was removed; the
   mobile header shows the logo and an avatar link to Your space.
 - Landing (01): illustrated hero, Understand / Connect / Remember cards, a
-  "Try a few activities" row fed by the free samples, then the short film.
+  "Try a few activities" row fed by the free samples. The short film was
+  later removed from the landing page and now appears only on Explore.
 - Today (02, 03): "A little moment for you", a featured activity with
   "Start activity", a "Your journey" dots card, three illustrated tiles and a
   "This week" insight card.

@@ -746,12 +746,6 @@ button.menu-row:hover {
   margin-top: auto;
   align-self: start;
 }
-.home-film {
-  margin-top: 64px;
-}
-.home-film .section-heading {
-  margin-bottom: 20px;
-}
 .home-how {
   margin-top: 64px;
   padding: 44px;
@@ -2396,8 +2390,7 @@ button.menu-row:hover {
     aspect-ratio: 1.35;
     border-radius: 28px;
   }
-  .home-section,
-  .home-film {
+  .home-section {
     padding-top: 44px;
     margin-top: 0;
   }

@@ -3,7 +3,6 @@ import { useSamples } from '@/lib/queries'
 import { ButtonLink, Chip } from '@/components/ui'
 import { Artwork, categoryArt } from '@/components/Artwork'
 import { Icon } from '@/components/Icon'
-import { DevelopmentJourney } from '@/features/development/DevelopmentJourney'
 
 // Shown until the free samples have loaded (or if they cannot be loaded).
 const placeholders = [
@@ -108,17 +107,6 @@ export default function HomePage() {
             </Link>
           ))}
         </div>
-      </section>
-
-      <section id="film" className="home-film" aria-label="A Little Sun film">
-        <div className="section-heading">
-          <div>
-            <p className="eyebrow">A SHORT FILM</p>
-            <h2>A little sun, growing in light.</h2>
-            <p>Forty-three seconds on how a voice, a story and a melody can reach a little life.</p>
-          </div>
-        </div>
-        <DevelopmentJourney compact />
       </section>
 
       <section id="how-it-works" className="home-how">
