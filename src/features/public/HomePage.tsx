@@ -1,7 +1,7 @@
 import { Link } from 'react-router'
 import { useSamples } from '@/lib/queries'
 import { ButtonLink, Chip } from '@/components/ui'
-import { Artwork, categoryArt } from '@/components/Artwork'
+import { Artwork, contentArt } from '@/components/Artwork'
 import { Icon } from '@/components/Icon'
 
 // Shown until the free samples have loaded (or if they cannot be loaded).
@@ -14,19 +14,19 @@ const placeholders = [
 const values = [
   {
     tone: 'blush',
-    image: 'solo-reading',
+    image: 'home-understand',
     title: 'Understand',
     text: 'Learn about your changing body, your baby’s development, and what to expect.',
   },
   {
     tone: 'sage',
-    image: 'together',
+    image: 'home-connect',
     title: 'Connect',
     text: 'Simple, meaningful activities to feel closer to your baby and each other.',
   },
   {
     tone: 'blush',
-    image: 'keepsakes',
+    image: 'home-remember',
     title: 'Remember',
     text: 'Capture the little moments to look back on, always.',
   },
@@ -39,7 +39,7 @@ export default function HomePage() {
     .slice(0, 3)
     .map((i) => ({
       slug: i.slug,
-      image: categoryArt(i.category),
+      image: contentArt(i),
       title: i.version.title,
       summary: i.version.summary,
       minutes: i.version.duration_minutes,

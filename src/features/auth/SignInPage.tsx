@@ -88,7 +88,7 @@ export default function SignInPage() {
   return (
     <div className="auth-layout">
       <div className="auth-art">
-        <Artwork name="family-reading" eager />
+        <Artwork name="page-sign-in" eager />
         <div className="auth-art-caption">
           <h2>
             A little space.

@@ -310,7 +310,7 @@ export function EmptyState({
   title,
   children,
   action,
-  art = 'keepsakes',
+  art = 'memory-note-1',
 }: {
   title: string
   children?: ReactNode
