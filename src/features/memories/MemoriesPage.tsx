@@ -25,12 +25,14 @@ export function MemoryBadges({ memory, mine }: { memory: Memory; mine: boolean }
   )
 }
 
-const noteArt = ['journal', 'keepsakes', 'shared-moment']
-const voiceArt = ['voice-memory', 'evening']
+const noteArt = ['memory-note-1', 'memory-note-2', 'journal']
+// memory-voice-2 shows a pregnancy bump, so it is swapped out while pregnancy content is paused.
+const voiceArt = ['memory-voice-1', 'memory-voice-2']
+const pausedVoiceArt = ['memory-voice-1', 'voice-memory']
 const bars = [8, 14, 22, 30, 18, 26, 32, 20, 12, 24, 30, 16, 10, 22, 28, 14, 20, 26, 12, 18, 8, 16, 24, 10]
 
 export default function MemoriesPage() {
-  const { userId } = useMember()
+  const { userId, ctx } = useMember()
   const memories = useMemories()
   const [filter, setFilter] = useState<Filter>('all')
 
@@ -96,7 +98,8 @@ export default function MemoriesPage() {
         <ul className="memory-grid">
           {list.map((m, i) => {
             const mine = m.author_id === userId
-            const art = m.kind === 'voice' ? voiceArt[i % voiceArt.length] : noteArt[i % noteArt.length]
+            const voice = ctx.profile.content_paused ? pausedVoiceArt : voiceArt
+            const art = m.kind === 'voice' ? voice[i % voice.length] : noteArt[i % noteArt.length]
             const title =
               m.title ||
               (m.kind === 'voice' ? 'Voice memory' : m.body.slice(0, 60) + (m.body.length > 60 ? '…' : ''))

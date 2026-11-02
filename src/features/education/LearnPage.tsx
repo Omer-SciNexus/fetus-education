@@ -2,12 +2,15 @@ import { useParams } from 'react-router'
 import { useQuery } from '@tanstack/react-query'
 import { useItem } from '@/lib/queries'
 import { getReviewSummary } from '@/lib/api'
+import { useMember } from '@/lib/auth'
 import { formatDate } from '@/lib/format'
 import { Badge, ButtonLink, Card, EmptyState, ErrorState, LoadingState, Notice } from '@/components/ui'
+import { Artwork, contentArt } from '@/components/Artwork'
 import { PlaceholderBanner } from '@/features/activities/ActivityView'
 
 export default function LearnPage() {
   const { slug = '' } = useParams()
+  const { ctx } = useMember()
   const item = useItem(slug)
   const versionId = item.data?.version.id
   const reviews = useQuery({
@@ -25,6 +28,7 @@ export default function LearnPage() {
 
   return (
     <article className="mx-auto max-w-2xl space-y-5">
+      <Artwork name={contentArt(item.data, ctx.profile.content_paused)} className="activity-cover" eager />
       <header className="space-y-2">
         <div className="flex flex-wrap gap-2">
           <Badge tone="sage">Learn</Badge>

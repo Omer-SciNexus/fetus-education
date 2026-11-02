@@ -54,7 +54,7 @@ export default function SamplePage() {
             subtitle="A small beginning. Explore three free samples from the 14-activity program, no account needed."
           />
         </div>
-        <Artwork name="family-reading" eager />
+        <Artwork name="page-samples" eager />
       </div>
       <GuestNotice />
 

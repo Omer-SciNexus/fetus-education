@@ -25,7 +25,7 @@ export default function TalkPage() {
       />
 
       <Card className="talk-today">
-        <Artwork name="conversation" />
+        <Artwork name="today-conversation" />
         <div>
           <p className="eyebrow">Today’s idea</p>
           <h2>{today}</h2>

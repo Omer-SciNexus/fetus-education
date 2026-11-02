@@ -35,7 +35,7 @@ const prefCategories: { key: Category; icon: IconName }[] = [
   { key: 'reflect', icon: 'pen' },
 ]
 
-const stepArt: Record<StepKey, string> = { about: 'journal', journey: 'solo-reading', agree: 'keepsakes' }
+const stepArt: Record<StepKey, string> = { about: 'onboard-about', journey: 'onboard-journey', agree: 'onboard-agree' }
 
 export default function OnboardingPage() {
   const { ctx, ctxLoading, ctxError, refresh, signOut, session } = useAuth()
@@ -193,7 +193,7 @@ export default function OnboardingPage() {
                     onChange={() => setMode('solo')}
                     label="My pregnancy journey"
                     description="Mostly on my own. Every activity works solo."
-                    art="solo-reading"
+                    art="choice-solo"
                   />
                   <Choice
                     name="mode"
@@ -202,7 +202,7 @@ export default function OnboardingPage() {
                     onChange={() => setMode('shared')}
                     label="Together with my partner"
                     description="You can invite one partner next."
-                    art="together"
+                    art="choice-together"
                   />
                 </div>
               </fieldset>

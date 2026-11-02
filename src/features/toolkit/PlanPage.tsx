@@ -187,7 +187,7 @@ export default function PlanPage() {
       ) : plan.isError ? (
         <ErrorState error={plan.error} onRetry={() => void plan.refetch()} />
       ) : items.length === 0 ? (
-        <EmptyState title="Nothing here yet" art={list === 'names' ? 'family-reading' : 'keepsakes'}>
+        <EmptyState title="Nothing here yet" art="empty-plan">
           {c.empty}
         </EmptyState>
       ) : (

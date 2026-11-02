@@ -4,7 +4,7 @@ import { useProgress, usePublished } from '@/lib/queries'
 import { dailyInsight, recommend } from '@/lib/recommend'
 import { effectiveStage } from '@/lib/stage'
 import { Badge, ButtonLink, Card, ErrorState, LoadingState, PageHeader } from '@/components/ui'
-import { Artwork, categoryArt } from '@/components/Artwork'
+import { Artwork, contentArt } from '@/components/Artwork'
 import { Icon } from '@/components/Icon'
 import type { PublishedItem } from '@/types/db'
 import { dailyPrompt } from '@/lib/prompts'
@@ -84,7 +84,7 @@ export default function TodayPage() {
         <div className="today-top">
           {rec.next ? (
             <section className="featured-activity">
-              <Artwork name={paused ? 'journal' : categoryArt(rec.next.category)} eager />
+              <Artwork name={contentArt(rec.next, paused)} eager />
               <div className="feature-copy">
                 <span className="feature-meta">
                   <Icon name="clock" size={16} />
@@ -138,7 +138,7 @@ export default function TodayPage() {
                   <span key={item.id} className={`progress-dot ${completed.has(item.id) ? 'done' : ''}`} />
                 ))}
               </div>
-              <Artwork name="story-garden" />
+              <Artwork name="onboard-journey" />
               <p className="journey-note">Small moments can make a big difference.</p>
               <Link to="/explore?f=program" className="text-link">
                 See the program <Icon name="arrow" size={15} />
@@ -165,7 +165,7 @@ export default function TodayPage() {
                   Read more <Icon name="arrow" size={16} />
                 </ButtonLink>
               </div>
-              <Artwork name="solo-reading" />
+              <Artwork name={contentArt(insight)} />
             </Card>
           ) : (
             <Card className="insight-card">
@@ -177,7 +177,7 @@ export default function TodayPage() {
                   Your space <Icon name="arrow" size={16} />
                 </ButtonLink>
               </div>
-              <Artwork name="quiet-pause" />
+              <Artwork name="today-your-space" />
             </Card>
           )}
           <Card className="today-talk">
@@ -212,14 +212,14 @@ export default function TodayPage() {
           {rec.alternative ? (
             <Tile
               to={linkFor(rec.alternative)}
-              image={paused ? 'quiet-pause' : categoryArt(rec.alternative.category)}
+              image={contentArt(rec.alternative, paused)}
               title={rec.alternative.version.title}
               text={rec.alternative.version.summary || 'Something a little different.'}
             />
           ) : (
             <Tile
               to="/explore"
-              image="quiet-pause"
+              image={paused ? 'a-calm-place' : 'quiet-pause'}
               title="A quiet pause"
               text="Take a few breaths together."
             />
@@ -227,14 +227,14 @@ export default function TodayPage() {
           <Tile
             to="/memories/new"
             tone="blush"
-            image="journal"
+            image={paused ? 'journal' : 'today-family-story'}
             title="A family story"
             text="Capture a memory for the road ahead."
           />
           <Tile
             to="/memories"
             tone="sage"
-            image="keepsakes"
+            image="today-saved"
             title="Your saved moments"
             text="A collection of what matters most."
           />

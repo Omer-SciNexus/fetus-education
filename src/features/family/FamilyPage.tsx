@@ -121,7 +121,7 @@ export default function FamilyPage() {
   return (
     <div className="mx-auto max-w-3xl">
       <PageHeader title="Your circle" />
-      <Artwork name={ctx.profile.content_paused ? 'conversation' : 'together'} className="circle-hero" eager />
+      <Artwork name={ctx.profile.content_paused ? 'family-paused' : 'family-circle'} className="circle-hero" eager />
       <div className="circle-intro">
         <h2>{partner || !isOwner ? 'A space for both of you' : 'Share a little moment'}</h2>
         <p>

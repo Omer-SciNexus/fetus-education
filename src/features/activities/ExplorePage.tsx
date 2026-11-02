@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react'
 import { Link, useSearchParams } from 'react-router'
 import { useFavorites, useProgress, usePublished } from '@/lib/queries'
 import { ButtonLink, Card, EmptyState, ErrorState, LoadingState, PageHeader, Pills, TextInput } from '@/components/ui'
-import { Artwork, categoryArt } from '@/components/Artwork'
+import { Artwork, contentArt } from '@/components/Artwork'
 import { Icon } from '@/components/Icon'
 import { ItemCard } from './ActivityView'
 import type { PublishedItem } from '@/types/db'
@@ -27,9 +27,11 @@ function hrefFor(i: PublishedItem) {
 function ProgramList({
   items,
   completed,
+  paused,
 }: {
   items: PublishedItem[]
   completed: ReadonlySet<string>
+  paused: boolean
 }) {
   const next = items.find((i) => !completed.has(i.id))
   return (
@@ -43,7 +45,7 @@ function ProgramList({
                 <span className="program-number" aria-hidden>
                   {i.program_position}
                 </span>
-                <Artwork name={categoryArt(i.category)} />
+                <Artwork name={contentArt(i, paused)} />
                 <span>
                   <h3>{i.version.title}</h3>
                   <p>
@@ -174,7 +176,7 @@ export default function ExplorePage() {
           {filter === 'favorites' && 'Tap the bookmark on any activity to keep it here.'}
         </EmptyState>
       ) : isProgram ? (
-        <ProgramList items={list} completed={new Set(completed.keys())} />
+        <ProgramList items={list} completed={new Set(completed.keys())} paused={ctx.profile.content_paused} />
       ) : (
         <ul className="library-grid">
           {list.map((i) => (
@@ -184,6 +186,7 @@ export default function ExplorePage() {
               to={hrefFor(i)}
               done={completed.has(i.id)}
               favorite={favorites.data?.has(i.id)}
+              paused={ctx.profile.content_paused}
             />
           ))}
         </ul>
