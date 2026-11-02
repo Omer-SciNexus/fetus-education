@@ -1,7 +1,7 @@
 import { useState, type ReactNode } from 'react'
 import { Link } from 'react-router'
 import { Badge, Card, Chip, Notice, Segmented } from '@/components/ui'
-import { Artwork, categoryArt } from '@/components/Artwork'
+import { Artwork, contentArt } from '@/components/Artwork'
 import { Icon } from '@/components/Icon'
 import { categoryLabels } from '@/lib/format'
 import type { PublishedItem } from '@/types/db'
@@ -68,12 +68,14 @@ export function ActivityView({
   actions,
   backTo = '/explore',
   topAction,
+  paused = false,
 }: {
   item: PublishedItem
   showTogether: boolean
   actions?: ReactNode
   backTo?: string
   topAction?: ReactNode
+  paused?: boolean
 }) {
   const v = item.version
   const hasTogether = !!v.together_steps.trim()
@@ -89,7 +91,7 @@ export function ActivityView({
         <h2>{kindLabel(item)}</h2>
         {topAction ?? <span />}
       </div>
-      <Artwork name={categoryArt(item.category)} className="activity-cover" eager />
+      <Artwork name={contentArt(item, paused)} className="activity-cover" eager />
       <header className="space-y-3">
         <h1>{v.title}</h1>
         <ItemMeta item={item} />
@@ -190,17 +192,19 @@ export function ItemCard({
   done,
   favorite,
   footer,
+  paused = false,
 }: {
   item: PublishedItem
   to: string
   done?: boolean
   favorite?: boolean
   footer?: ReactNode
+  paused?: boolean
 }) {
   return (
     <Card as="li" className="activity-card">
       <Link to={to} className="activity-card-cover" aria-hidden="true" tabIndex={-1}>
-        <Artwork name={categoryArt(item.category)} />
+        <Artwork name={contentArt(item, paused)} />
         {done && (
           <Chip tone="white" icon="check">
             Done

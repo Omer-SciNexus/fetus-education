@@ -47,6 +47,7 @@ export default function ActivityPage() {
     <ActivityView
       item={it}
       showTogether={together}
+      paused={ctx.profile.content_paused}
       topAction={
         <IconButton
           icon="bookmark"
