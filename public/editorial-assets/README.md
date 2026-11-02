@@ -34,3 +34,22 @@ publication or rights-register records were changed.
 WebP encoding preserves the original dimensions. Below-the-fold illustrations
 load lazily; the main hero illustrations load eagerly. No paid image service or
 remote font dependency is required at runtime.
+
+## Per-item illustrations (November 2026)
+
+52 more illustrations were generated with OpenAI image generation from
+`docs/design/image-prompts.md`, using `quiet-pause.webp` and `story-garden.webp` as style
+references. They are decorative brand illustrations, like the set above.
+
+- **Content:** every activity, audio script, learning card and story has its own image named
+  after its slug (e.g. `say-hello.webp`). `contentArt()` in `src/components/Artwork.tsx` picks it,
+  reuses four earlier images (`invite-partner`, `end-of-day`, `partners-welcome`,
+  `the-garden-that-waited`), and falls back to the category image for content added later.
+- **Pages:** `page-*`, `home-*`, `onboard-*`, `choice-*`, `today-*`, `memory-*` and `family-*`
+  replace images that used to repeat across pages.
+- **Paused mode:** while pregnancy content is paused, `contentArt()` only returns images with
+  no bump, baby or baby items (the `gentleArt` list). `family-paused` and `empty-plan` were made
+  for this. Check any new image before adding it to that list.
+
+Web copies are 1200 px wide (the two `choice-*` portraits 320 px), WebP quality 80. The PNG
+originals and contact sheets are kept outside the repository in `art-inbox/`.
